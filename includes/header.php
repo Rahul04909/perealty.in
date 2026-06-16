@@ -48,10 +48,10 @@
             <!-- Navigation Links (Desktop) -->
             <nav class="desktop-nav" aria-label="Main Navigation">
                 <ul class="nav-list">
-                    <li><a href="#hero" class="nav-link">Home</a></li>
-                    <li><a href="#projects" class="nav-link">Properties</a></li>
-                    <li><a href="#about" class="nav-link">About Us</a></li>
-                    <li><a href="#contact" class="nav-link">Contact Us</a></li>
+                    <li><a href="index.php#hero" class="nav-link">Home</a></li>
+                    <li><a href="index.php#projects" class="nav-link">Properties</a></li>
+                    <li><a href="index.php#about" class="nav-link">About Us</a></li>
+                    <li><a href="index.php#contact" class="nav-link">Contact Us</a></li>
                 </ul>
             </nav>
 
@@ -88,10 +88,10 @@
         <div class="drawer-body">
             <nav class="mobile-nav" aria-label="Mobile Navigation">
                 <ul class="mobile-nav-list">
-                    <li><a href="#hero" class="mobile-nav-link">Home</a></li>
-                    <li><a href="#projects" class="mobile-nav-link">Properties</a></li>
-                    <li><a href="#about" class="mobile-nav-link">About Us</a></li>
-                    <li><a href="#contact" class="mobile-nav-link">Contact Us</a></li>
+                    <li><a href="index.php#hero" class="mobile-nav-link">Home</a></li>
+                    <li><a href="index.php#projects" class="mobile-nav-link">Properties</a></li>
+                    <li><a href="index.php#about" class="mobile-nav-link">About Us</a></li>
+                    <li><a href="index.php#contact" class="mobile-nav-link">Contact Us</a></li>
                 </ul>
             </nav>
             <div class="drawer-footer">

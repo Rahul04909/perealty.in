@@ -1,0 +1,683 @@
+/* assets/css/property-details.css */
+
+.property-details-page {
+    background-color: var(--color-bg-dark);
+    padding: 7.5rem 0 5rem 0; /* Keep space for headers */
+    position: relative;
+    z-index: 5;
+}
+
+/* Nav & Breadcrumbs */
+.details-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--color-text-light);
+    transform: translateX(-3px);
+}
+
+.breadcrumb-trail {
+    color: var(--color-text-muted);
+}
+
+.breadcrumb-trail a {
+    color: var(--color-text-muted);
+}
+
+.breadcrumb-trail a:hover {
+    color: var(--color-accent);
+}
+
+.breadcrumb-trail span {
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+
+/* Property Header Title Area */
+.property-header-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.detail-tag {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.detail-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.detail-location {
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.detail-location svg {
+    color: var(--color-accent);
+    width: 16px;
+    height: 16px;
+}
+
+.property-price-box {
+    text-align: right;
+}
+
+.price-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.detail-price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+}
+
+/* Gallery Grid */
+.details-gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: repeat(2, 235px);
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+}
+
+.gallery-main-box {
+    grid-row: span 2;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.gallery-large-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.gallery-side-box {
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.gallery-side-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.gallery-main-box:hover img, .gallery-side-box:hover img {
+    transform: scale(1.03);
+}
+
+/* Specifications Bar */
+.details-specs-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--color-bg-dark-card);
+    border: 1px solid var(--color-border-dark);
+    padding: 2rem;
+    border-radius: var(--border-radius-custom-md);
+    margin-bottom: 4rem;
+    gap: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.spec-tile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.spec-tile svg {
+    color: var(--color-accent);
+    width: 28px;
+    height: 28px;
+}
+
+.spec-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-val {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-light);
+}
+
+.spec-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Split content layout grid */
+.details-split-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 0.65fr;
+    gap: 3.5rem;
+    align-items: start;
+}
+
+/* Left side panels */
+.detail-section {
+    border-bottom: 1px solid var(--color-border-dark);
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+}
+
+.detail-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.detail-section-title {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.detail-desc-paragraph {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* Amenities Grid checks */
+.amenities-check-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+}
+
+.amenity-check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+}
+
+.check-gold {
+    color: var(--color-accent);
+    flex-shrink: 0;
+}
+
+/* Floor Plans Accordion */
+.floor-plans-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.floor-accordion-item {
+    border: 1px solid var(--color-border-dark);
+    background-color: var(--color-bg-dark-card);
+    border-radius: var(--border-radius-rect);
+    overflow: hidden;
+}
+
+.floor-accordion-header {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-text-light);
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: none;
+    transition: var(--transition-normal);
+}
+
+.floor-accordion-header:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+    color: var(--color-accent);
+}
+
+.acc-arrow {
+    transition: transform 0.3s ease;
+}
+
+.floor-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 1.5rem;
+    transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Expand content on active level */
+.floor-accordion-item.active .floor-accordion-content {
+    max-height: 800px;
+    padding-bottom: 1.5rem;
+}
+
+.floor-accordion-item.active .acc-arrow {
+    transform: rotate(180deg);
+    color: var(--color-accent);
+}
+
+.floor-plan-desc {
+    margin-bottom: 1.5rem;
+}
+
+/* Visual Floorplan Mockup */
+.floor-plan-img-mock {
+    border: 1px dashed var(--color-border-dark);
+    padding: 2rem;
+    background-color: rgba(18, 30, 33, 0.4);
+}
+
+.mock-plan-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 120px);
+    gap: 1rem;
+}
+
+.mock-plan-room {
+    border: 1px solid var(--color-border-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.01);
+}
+
+/* Map Location & Proximity */
+.proximity-map-box {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border-dark);
+    overflow: hidden;
+}
+
+.mock-map-bg {
+    height: 240px;
+    background: radial-gradient(circle at 50% 50%, #1e3135 10%, #121e21 90%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Stylish dark map texture gridlines */
+.mock-map-bg::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    top: 0;
+    left: 0;
+}
+
+.map-marker-pin {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: floatPin 3s ease-in-out infinite;
+}
+
+.map-marker-pin svg {
+    color: var(--color-accent);
+    fill: rgba(229, 186, 115, 0.2);
+    width: 38px;
+    height: 38px;
+}
+
+.marker-text {
+    background-color: var(--color-bg-dark-card);
+    border: 1px solid var(--color-accent);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    color: var(--color-text-light);
+    margin-top: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    white-space: nowrap;
+}
+
+@keyframes floatPin {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.proximity-distances-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+    background-color: var(--color-bg-dark-card);
+}
+
+.proximity-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.proximity-item svg {
+    color: var(--color-accent);
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Sidebar Sticky Content */
+.sidebar-sticky-box {
+    position: sticky;
+    top: 6.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Agent Card widget styling */
+.agent-form-card {
+    background-color: var(--color-bg-dark-card);
+    border: 1px solid var(--color-border-dark);
+    padding: 2.5rem 2rem;
+    border-radius: var(--border-radius-custom-md);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.agent-profile {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1.5rem;
+}
+
+.agent-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--color-accent);
+}
+
+.agent-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.agent-name {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.agent-role {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.agent-phone {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.sidebar-inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.sidebar-input, .sidebar-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--border-radius-rect);
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    transition: var(--transition-normal);
+}
+
+.sidebar-input::placeholder, .sidebar-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-input:focus, .sidebar-textarea:focus {
+    border-color: var(--color-accent);
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-textarea {
+    resize: none;
+}
+
+/* Mortgage Calculator styling */
+.mortgage-calc-card {
+    background-color: var(--color-bg-dark-card);
+    border: 1px solid var(--color-border-dark);
+    padding: 2.5rem 2rem;
+    border-radius: var(--border-radius-custom-md);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.calc-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.calc-subtitle {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.75rem;
+}
+
+.calc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.calc-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.calc-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.calc-input, .calc-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--border-radius-rect);
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    transition: var(--transition-normal);
+}
+
+.calc-input:focus, .calc-select:focus {
+    border-color: var(--color-accent);
+}
+
+.calc-select option {
+    background-color: var(--color-bg-dark-card);
+    color: var(--color-text-light);
+}
+
+/* Monthly display area */
+.calc-result-box {
+    background-color: rgba(229, 186, 115, 0.05);
+    border: 1px solid rgba(229, 186, 115, 0.15);
+    padding: 1.25rem;
+    border-radius: var(--border-radius-rect);
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.result-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.result-amount {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-accent);
+}
+
+/* Responsive Customisations */
+@media (max-width: 1200px) {
+    .details-gallery-grid {
+        grid-template-rows: repeat(2, 200px);
+    }
+}
+
+@media (max-width: 1024px) {
+    .details-split-grid {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+    }
+    
+    .sidebar-sticky-box {
+        position: static; /* Disable sticky sidebar on smaller screens */
+    }
+    
+    .details-specs-bar {
+        grid-template-columns: repeat(3, 1fr);
+        display: grid;
+        gap: 2rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .property-header-area {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+    
+    .property-price-box {
+        text-align: left;
+    }
+    
+    .detail-title {
+        font-size: 2.25rem;
+    }
+    
+    .detail-price {
+        font-size: 2rem;
+    }
+    
+    .details-gallery-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 200px);
+    }
+    
+    .gallery-main-box {
+        grid-row: span 1;
+    }
+    
+    .amenities-check-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .proximity-distances-grid {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+    
+    .details-specs-bar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .details-specs-bar {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+    
+    .agent-form-card, .mortgage-calc-card {
+        padding: 2rem 1.5rem;
+    }
+}

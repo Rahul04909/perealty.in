@@ -40,7 +40,7 @@
                                 <h4 class="project-card-title">Eco-Solar Villa</h4>
                                 <p class="project-card-location">Beverly Hills, CA</p>
                             </div>
-                            <a href="#contact" class="project-card-btn" aria-label="View Details">
+                            <a href="property-details.php?property=eco-solar" class="project-card-btn" aria-label="View Details">
                                 <i data-lucide="arrow-up-right"></i>
                             </a>
                         </div>
@@ -54,7 +54,7 @@
                                 <h4 class="project-card-title">Cubic Glass Manor</h4>
                                 <p class="project-card-location">Malibu, CA</p>
                             </div>
-                            <a href="#contact" class="project-card-btn" aria-label="View Details">
+                            <a href="property-details.php?property=cubic-glass" class="project-card-btn" aria-label="View Details">
                                 <i data-lucide="arrow-up-right"></i>
                             </a>
                         </div>
@@ -68,7 +68,7 @@
                                 <h4 class="project-card-title">Contemporary Mansion</h4>
                                 <p class="project-card-location">Miami, FL</p>
                             </div>
-                            <a href="#contact" class="project-card-btn" aria-label="View Details">
+                            <a href="property-details.php?property=contemporary-mansion" class="project-card-btn" aria-label="View Details">
                                 <i data-lucide="arrow-up-right"></i>
                             </a>
                         </div>
