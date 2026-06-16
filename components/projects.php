@@ -1,6 +1,6 @@
 <?php
 /**
- * Projects Component for Prime Edge Realty
+ * Projects Component for Prime Edge Realiity
  */
 ?>
 <section class="projects-section" id="projects">

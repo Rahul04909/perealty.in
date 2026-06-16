@@ -1,6 +1,6 @@
 <?php
 /**
- * Stats Component for Prime Edge Realty
+ * Stats Component for Prime Edge Realiity
  */
 ?>
 <section class="stats-section" id="stats">

@@ -8,10 +8,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Edge Realty | Your Edge in Smart Investments</title>
-    <meta name="description" content="Prime Edge Realty offers premium real estate solutions, modern residential apartments, luxury houses, and smart property investment opportunities with over 20 years of expertise.">
-    <meta name="keywords" content="Real Estate, Prime Edge Realty, Luxury Homes, Smart Investments, Property Valuation, Property Management">
-    <meta name="author" content="Prime Edge Realty">
+    <title>Prime Edge Realiity | Your Edge in Smart Investments</title>
+    <meta name="description" content="Prime Edge Realiity offers premium real estate solutions, modern residential apartments, luxury houses, and smart property investment opportunities with over 20 years of expertise.">
+    <meta name="keywords" content="Real Estate, Prime Edge Realiity, Luxury Homes, Smart Investments, Property Valuation, Property Management">
+    <meta name="author" content="Prime Edge Realiity">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
@@ -38,10 +38,10 @@
         <div class="container header-container">
             <!-- Logo Section -->
             <a href="index.php" class="logo-area" id="logo-link">
-                <img src="assets/logo/logo.png" alt="Prime Edge Realty Logo" class="logo-img">
+                <img src="assets/logo/logo.png" alt="Prime Edge Realiity Logo" class="logo-img">
                 <span class="logo-text">
                     <span class="logo-title">PRIME EDGE</span>
-                    <span class="logo-subtitle">REALTY</span>
+                    <span class="logo-subtitle">REALIITY</span>
                 </span>
             </a>
 
@@ -77,10 +77,10 @@
     <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
         <div class="drawer-header">
             <a href="index.php" class="logo-area">
-                <img src="assets/logo/logo.png" alt="Prime Edge Realty Logo" class="logo-img">
+                <img src="assets/logo/logo.png" alt="Prime Edge Realiity Logo" class="logo-img">
                 <span class="logo-text">
                     <span class="logo-title">PRIME EDGE</span>
-                    <span class="logo-subtitle">REALTY</span>
+                    <span class="logo-subtitle">REALIITY</span>
                 </span>
             </a>
             <button class="drawer-close" id="drawer-close-btn" aria-label="Close Menu">

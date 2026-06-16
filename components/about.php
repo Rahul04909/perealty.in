@@ -1,6 +1,6 @@
 <?php
 /**
- * About Us Component for Prime Edge Realty
+ * About Us Component for Prime Edge Realiity
  */
 ?>
 <section class="about-section" id="about">
@@ -49,7 +49,7 @@
                         <path id="textCirclePath" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" fill="transparent" />
                         <text>
                             <textPath href="#textCirclePath" class="stamp-svg-text" startOffset="0%">
-                                PRIME EDGE REALTY • PRIME EDGE AGENT •
+                                PRIME EDGE REALIITY • ANIL MEHRA •
                             </textPath>
                         </text>
                     </svg>

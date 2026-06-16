@@ -9,14 +9,14 @@
             <!-- Footer Brand & Info -->
             <div class="footer-col brand-col">
                 <a href="index.php" class="logo-area footer-logo">
-                    <img src="assets/logo/logo.png" alt="Prime Edge Realty Logo" class="logo-img">
+                    <img src="assets/logo/logo.png" alt="Prime Edge Realiity Logo" class="logo-img">
                     <span class="logo-text">
                         <span class="logo-title">PRIME EDGE</span>
-                        <span class="logo-subtitle">REALTY</span>
+                        <span class="logo-subtitle">REALIITY</span>
                     </span>
                 </a>
                 <p class="footer-desc">
-                    Prime Edge Realty is a premier real estate firm dedicated to delivering your edge in smart investments. We turn property search into a personalized luxury experience.
+                    Prime Edge Realiity is a premier real estate firm dedicated to delivering your edge in smart investments. We turn property search into a personalized luxury experience.
                 </p>
                 <div class="footer-socials">
                     <a href="#" class="social-icon" aria-label="Facebook">
@@ -76,7 +76,7 @@
         <!-- Copyright Bar -->
         <div class="footer-bottom">
             <div class="container footer-bottom-container">
-                <p class="copyright-text">&copy; <?php echo date("Y"); ?> Prime Edge Realty. All rights reserved. | Tagline: Your Edge in Smart Investments</p>
+                <p class="copyright-text">&copy; <?php echo date("Y"); ?> Prime Edge Realiity. All rights reserved. | Tagline: Your Edge in Smart Investments</p>
                 <div class="footer-bottom-links">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms & Conditions</a>

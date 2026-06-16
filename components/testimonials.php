@@ -1,6 +1,6 @@
 <?php
 /**
- * Testimonials Component for Prime Edge Realty
+ * Testimonials Component for Prime Edge Realiity
  */
 ?>
 <section class="testimonials-section" id="testimonials">
@@ -13,7 +13,7 @@
             <span class="section-tagline">TESTIMONIALS</span>
             <h2 class="section-title">What Our Clients Say</h2>
             <p class="testimonials-lead">
-                Hear directly from our satisfied homeowners and smart investors about their experiences with Prime Edge Realty.
+                Hear directly from our satisfied homeowners and smart investors about their experiences with Prime Edge Realiity.
             </p>
         </div>
 
@@ -30,7 +30,7 @@
                         <i data-lucide="star" class="star-icon fill-gold"></i>
                     </div>
                     <blockquote class="testimonial-quote">
-                        "Prime Edge Realty gave us our absolute dream home in Eco-Solar Villa. The purchase flow was flawless and their property valuation matching was completely spot on!"
+                        "Prime Edge Realiity gave us our absolute dream home in Eco-Solar Villa. The purchase flow was flawless and their property valuation matching was completely spot on!"
                     </blockquote>
                     <div class="testimonial-user">
                         <div class="user-avatar">

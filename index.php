@@ -1,6 +1,6 @@
 <?php
 /**
- * Prime Edge Realty Landing Page
+ * Prime Edge Realiity Landing Page
  * Main Entry Point
  */
 

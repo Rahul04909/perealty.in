@@ -1,6 +1,6 @@
 <?php
 /**
- * Contact/Investment Inquiry Component for Prime Edge Realty
+ * Contact/Investment Inquiry Component for Prime Edge Realiity
  */
 ?>
 <section class="contact-section" id="contact">
@@ -26,7 +26,7 @@
                         </div>
                         <div class="contact-text">
                             <span class="contact-label">Call Us Directly</span>
-                            <a href="tel:+18005557732" class="contact-link">+1 (800) 555-7732</a>
+                            <a href="tel:+919310104249" class="contact-link">+91 93101 04249</a>
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@
                         </div>
                         <div class="contact-text">
                             <span class="contact-label">Headquarters</span>
-                            <address class="contact-address">742 Evergreen Terrace, Beverly Hills, CA 90210</address>
+                            <address class="contact-address">198 SCO 1st Floor, Omaxe World Street, Sector 79 Faridabad 121002</address>
                         </div>
                     </div>
                 </div>

@@ -22,16 +22,16 @@
                 <!-- Testimonial CEO signature block -->
                 <div class="ceo-profile-card">
                     <div class="ceo-avatar-box">
-                        <img src="assets/images/agent_portrait.png" alt="Basila Smith, CEO of Prime Edge Realty">
+                        <img src="assets/images/agent_portrait.png" alt="Anil Mehra, Founder of Prime Edge Realiity">
                     </div>
                     <div class="ceo-meta">
-                        <h4 class="ceo-name">Basila Smith</h4>
-                        <p class="ceo-title">CEO of Prime Edge</p>
+                        <h4 class="ceo-name">Anil Mehra</h4>
+                        <p class="ceo-title">Founder of Prime Edge</p>
                     </div>
                     <div class="ceo-signature-box">
-                        <!-- Handwritten Signature in SVG -->
-                        <svg viewBox="0 0 120 50" class="signature-svg" aria-label="Basila Smith Signature">
-                            <path d="M 10 30 Q 25 10 35 25 T 50 15 T 65 35 Q 75 10 90 20 T 110 15" fill="none" stroke="#121E21" stroke-width="2" stroke-linecap="round" />
+                        <!-- Handwritten Signature in SVG for Anil Mehra -->
+                        <svg viewBox="0 0 120 50" class="signature-svg" aria-label="Anil Mehra Signature">
+                            <path d="M 10 35 C 15 20, 22 10, 27 35 T 45 25 T 60 35 T 75 15 T 90 20 T 110 18" fill="none" stroke="#121E21" stroke-width="2" stroke-linecap="round" />
                             <path d="M 25 25 L 95 25" fill="none" stroke="#121E21" stroke-width="1" stroke-dasharray="3 3" />
                         </svg>
                     </div>

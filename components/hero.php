@@ -1,6 +1,6 @@
 <?php
 /**
- * Hero Component for Prime Edge Realty
+ * Hero Component for Prime Edge Realiity
  */
 ?>
 <section class="hero-section" id="hero">
@@ -50,7 +50,7 @@
             <!-- Hero Image Showcase with Interactive Play overlay -->
             <div class="hero-visual">
                 <div class="hero-image-wrapper custom-border-img">
-                    <img src="assets/images/hero_house.png" alt="Premium Luxury Villa in Prime Edge Realty" class="hero-img">
+                    <img src="assets/images/hero_house.png" alt="Premium Luxury Villa in Prime Edge Realiity" class="hero-img">
                     
                     <!-- Pulsing Play Button overlay -->
                     <button class="video-play-btn" id="hero-video-trigger" aria-label="Play property video">
