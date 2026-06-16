@@ -76,7 +76,7 @@
         <!-- Copyright Bar -->
         <div class="footer-bottom">
             <div class="container footer-bottom-container">
-                <p class="copyright-text">&copy; <?php echo date("Y"); ?> Prime Edge Realiity. All rights reserved. | Tagline: Your Edge in Smart Investments</p>
+                <p class="copyright-text">&copy; <?php echo date("Y"); ?> Prime Edge Realiity. All rights reserved. | A website Designed & Developed By <a href="https://mineib.com" target="_blank" rel="noopener" style="color: var(--color-accent); font-weight: 600;">Mineib</a></p>
                 <div class="footer-bottom-links">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms & Conditions</a>
