@@ -88,7 +88,7 @@
     padding: 0.5rem 0;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover {
     color: var(--color-text-light);
 }
 
@@ -105,7 +105,7 @@
     transform: translateX(-50%);
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after {
     width: 100%;
 }
 

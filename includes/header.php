@@ -48,11 +48,9 @@
             <!-- Navigation Links (Desktop) -->
             <nav class="desktop-nav" aria-label="Main Navigation">
                 <ul class="nav-list">
-                    <li><a href="#hero" class="nav-link active">Home</a></li>
-                    <li><a href="#about" class="nav-link">About Us</a></li>
+                    <li><a href="#hero" class="nav-link">Home</a></li>
                     <li><a href="#projects" class="nav-link">Properties</a></li>
-                    <li><a href="#promo" class="nav-link">Agencies</a></li>
-                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="#about" class="nav-link">About Us</a></li>
                     <li><a href="#contact" class="nav-link">Contact Us</a></li>
                 </ul>
             </nav>
@@ -60,7 +58,7 @@
             <!-- CTA & Burger Action Area -->
             <div class="action-area">
                 <a href="#contact" class="btn btn-primary btn-header-cta" id="btn-add-listing">
-                    Add Listing <i data-lucide="arrow-right"></i>
+                    Enquire Now <i data-lucide="arrow-right"></i>
                 </a>
                 
                 <!-- Burger Button -->
@@ -91,15 +89,13 @@
             <nav class="mobile-nav" aria-label="Mobile Navigation">
                 <ul class="mobile-nav-list">
                     <li><a href="#hero" class="mobile-nav-link">Home</a></li>
-                    <li><a href="#about" class="mobile-nav-link">About Us</a></li>
                     <li><a href="#projects" class="mobile-nav-link">Properties</a></li>
-                    <li><a href="#promo" class="mobile-nav-link">Agencies</a></li>
-                    <li><a href="#testimonials" class="mobile-nav-link">Testimonials</a></li>
+                    <li><a href="#about" class="mobile-nav-link">About Us</a></li>
                     <li><a href="#contact" class="mobile-nav-link">Contact Us</a></li>
                 </ul>
             </nav>
             <div class="drawer-footer">
-                <a href="#contact" class="btn btn-primary w-full" style="width: 100%;">Add Listing <i data-lucide="arrow-right"></i></a>
+                <a href="#contact" class="btn btn-primary w-full" style="width: 100%;">Enquire Now <i data-lucide="arrow-right"></i></a>
             </div>
         </div>
     </div>
