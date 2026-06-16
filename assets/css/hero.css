@@ -227,7 +227,8 @@
     transition: var(--transition-normal);
 }
 
-.video-play-btn i {
+.video-play-btn i,
+.video-play-btn svg {
     width: 20px;
     height: 20px;
     color: var(--color-text-light);
@@ -267,7 +268,8 @@
     background-color: rgba(18, 30, 33, 0.2);
 }
 
-.video-play-btn:hover i {
+.video-play-btn:hover i,
+.video-play-btn:hover svg {
     color: var(--color-text-dark);
 }
 

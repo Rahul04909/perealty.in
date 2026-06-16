@@ -153,7 +153,8 @@
     transform: scale(1.05);
 }
 
-.control-btn i {
+.control-btn i,
+.control-btn svg {
     width: 18px;
     height: 18px;
 }

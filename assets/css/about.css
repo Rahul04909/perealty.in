@@ -205,7 +205,8 @@
     border-color: var(--color-accent);
 }
 
-.service-icon-box i {
+.service-icon-box i,
+.service-icon-box svg {
     width: 24px;
     height: 24px;
 }

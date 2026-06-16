@@ -180,7 +180,8 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.project-card-btn i {
+.project-card-btn i,
+.project-card-btn svg {
     width: 18px;
     height: 18px;
     transition: var(--transition-normal);
@@ -192,7 +193,8 @@
     transform: scale(1.1);
 }
 
-.project-card-btn:hover i {
+.project-card-btn:hover i,
+.project-card-btn:hover svg {
     transform: rotate(45deg);
 }
 

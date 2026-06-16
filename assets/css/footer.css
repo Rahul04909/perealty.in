@@ -49,7 +49,8 @@
     transition: var(--transition-normal);
 }
 
-.social-icon i {
+.social-icon i,
+.social-icon svg {
     width: 18px;
     height: 18px;
 }
@@ -96,7 +97,8 @@
     transition: var(--transition-fast);
 }
 
-.footer-links-list li a i {
+.footer-links-list li a i,
+.footer-links-list li a svg {
     width: 14px;
     height: 14px;
     opacity: 0.6;
@@ -108,7 +110,8 @@
     padding-left: 0.25rem;
 }
 
-.footer-links-list li a:hover i {
+.footer-links-list li a:hover i,
+.footer-links-list li a:hover svg {
     opacity: 1;
     transform: translateX(2px);
 }
@@ -215,7 +218,8 @@
     background-color: var(--color-text-light);
 }
 
-.back-to-top i {
+.back-to-top i,
+.back-to-top svg {
     width: 20px;
     height: 20px;
 }
