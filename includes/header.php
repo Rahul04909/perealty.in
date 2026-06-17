@@ -15,8 +15,8 @@
     
     <!-- Automatic OpenGraph Tags -->
     <?php if (isset($og_tags) && is_array($og_tags)): ?>
-        <?php foreach ($og_tags as $property => $content): ?>
-            <meta property="<?php echo htmlspecialchars($property); ?>" content="<?php echo htmlspecialchars($content); ?>">
+        <?php foreach ($og_tags as $ogKey => $ogContent): ?>
+            <meta property="<?php echo htmlspecialchars($ogKey); ?>" content="<?php echo htmlspecialchars($ogContent); ?>">
         <?php endforeach; ?>
     <?php endif; ?>
 
