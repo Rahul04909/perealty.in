@@ -2,6 +2,48 @@
 /**
  * Projects Component for Prime Edge Realiity
  */
+
+try {
+    $db = db();
+    $stmt = $db->query("SELECT * FROM `projects` ORDER BY `id` ASC");
+    $dbProjectsList = $stmt->fetchAll();
+} catch (\Exception $e) {
+    $dbProjectsList = [];
+}
+
+// Fallback to hardcoded ones if DB returns empty
+if (empty($dbProjectsList)) {
+    $sliderProjects = [
+        [
+            'slug' => 'eco-solar',
+            'title' => 'Eco-Solar Villa',
+            'location' => '198 SCO 1st Floor, Sector 79 Faridabad 121002',
+            'image' => 'assets/images/project_one.png'
+        ],
+        [
+            'slug' => 'cubic-glass',
+            'title' => 'Cubic Glass Manor',
+            'location' => 'Omaxe World Street Phase II, Sector 79 Faridabad 121002',
+            'image' => 'assets/images/project_two.png'
+        ],
+        [
+            'slug' => 'contemporary-mansion',
+            'title' => 'Contemporary Mansion',
+            'location' => 'Sector 79 Faridabad, Haryana 121002',
+            'image' => 'assets/images/hero_house.png'
+        ]
+    ];
+} else {
+    $sliderProjects = [];
+    foreach ($dbProjectsList as $dbProj) {
+        $sliderProjects[] = [
+            'slug' => $dbProj['slug'],
+            'title' => $dbProj['title'],
+            'location' => $dbProj['location'],
+            'image' => $dbProj['image']
+        ];
+    }
+}
 ?>
 <section class="projects-section" id="projects">
     <!-- Huge background outline text -->
@@ -32,54 +74,38 @@
             <!-- Right Side: Project Cards Showcase Slider -->
             <div class="projects-showcase-pane">
                 <div class="projects-slider-wrapper" id="projects-slider">
-                    <!-- Project Slide 1 -->
-                    <div class="project-slide active" data-index="01">
-                        <div class="project-card-image custom-border-img">
-                            <img src="assets/images/project_one.png" alt="Prime Edge Eco Residence">
-                            <div class="project-card-overlay">
-                                <h4 class="project-card-title">Eco-Solar Villa</h4>
-                                <p class="project-card-location">Beverly Hills, CA</p>
+                    <?php foreach ($sliderProjects as $idx => $slide): ?>
+                        <?php 
+                        $indexNum = str_pad($idx + 1, 2, '0', STR_PAD_LEFT); 
+                        $activeClass = $idx === 0 ? 'active' : '';
+                        
+                        // Resolve image source
+                        $imgSrc = $slide['image'];
+                        if (strpos($imgSrc, 'assets/') === false) {
+                            $imgSrc = 'uploads/projects/' . $imgSrc;
+                        }
+                        ?>
+                        <!-- Project Slide <?php echo $indexNum; ?> -->
+                        <div class="project-slide <?php echo $activeClass; ?>" data-index="<?php echo $indexNum; ?>">
+                            <div class="project-card-image custom-border-img">
+                                <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="Prime Edge <?php echo htmlspecialchars($slide['title']); ?>">
+                                <div class="project-card-overlay">
+                                    <h4 class="project-card-title"><?php echo htmlspecialchars($slide['title']); ?></h4>
+                                    <p class="project-card-location"><?php echo htmlspecialchars($slide['location']); ?></p>
+                                </div>
+                                <a href="property-details.php?property=<?php echo htmlspecialchars($slide['slug']); ?>" class="project-card-btn" aria-label="View Details">
+                                    <i data-lucide="arrow-up-right"></i>
+                                </a>
                             </div>
-                            <a href="property-details.php?property=eco-solar" class="project-card-btn" aria-label="View Details">
-                                <i data-lucide="arrow-up-right"></i>
-                            </a>
                         </div>
-                    </div>
-
-                    <!-- Project Slide 2 -->
-                    <div class="project-slide" data-index="02">
-                        <div class="project-card-image custom-border-img">
-                            <img src="assets/images/project_two.png" alt="Prime Edge Cubic Villa">
-                            <div class="project-card-overlay">
-                                <h4 class="project-card-title">Cubic Glass Manor</h4>
-                                <p class="project-card-location">Malibu, CA</p>
-                            </div>
-                            <a href="property-details.php?property=cubic-glass" class="project-card-btn" aria-label="View Details">
-                                <i data-lucide="arrow-up-right"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Project Slide 3 -->
-                    <div class="project-slide" data-index="03">
-                        <div class="project-card-image custom-border-img">
-                            <img src="assets/images/hero_house.png" alt="Prime Edge Luxury Mansion">
-                            <div class="project-card-overlay">
-                                <h4 class="project-card-title">Contemporary Mansion</h4>
-                                <p class="project-card-location">Miami, FL</p>
-                            </div>
-                            <a href="property-details.php?property=contemporary-mansion" class="project-card-btn" aria-label="View Details">
-                                <i data-lucide="arrow-up-right"></i>
-                            </a>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <!-- Bottom Horizontal Indicators -->
                 <div class="projects-slider-nav">
-                    <span class="slide-nav-dot active" data-slide="0"></span>
-                    <span class="slide-nav-dot" data-slide="1"></span>
-                    <span class="slide-nav-dot" data-slide="2"></span>
+                    <?php foreach ($sliderProjects as $idx => $slide): ?>
+                        <span class="slide-nav-dot <?php echo $idx === 0 ? 'active' : ''; ?>" data-slide="<?php echo $idx; ?>"></span>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

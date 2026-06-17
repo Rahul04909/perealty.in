@@ -18,10 +18,11 @@ $menuItems = [
         ],
     ],
     [
-        "menuTitle" => "Administrators",
-        "icon" => "fas fa-users-cog",
+        "menuTitle" => "Properties & Projects",
+        "icon" => "fas fa-building",
         "pages" => [
-            ["title" => "Import Admin", "url" => "import-admin.php"]
+            ["title" => "All Projects", "url" => "projects.php"],
+            ["title" => "Add Project", "url" => "project-add.php"]
         ],
     ],
     [
@@ -49,6 +50,18 @@ foreach ($menuItems as $menuItem) {
             break 2;
         }
     }
+}
+
+if ($active_pageInfo === null && $currentPage === 'project-edit.php') {
+    $active_pageInfo = [
+        "breadcrumb_Items" => [
+            ["title" => "Properties & Projects", "url" => "projects.php"],
+            ["title" => "Edit Project", "url" => "#"]
+        ],
+        "page_title" => "Edit Project",
+        "active_menu" => $menuItems[1],
+        "active_page" => null
+    ];
 }
 
 $breadcrumb_Items = $active_pageInfo['breadcrumb_Items'] ?? [];

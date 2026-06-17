@@ -5,10 +5,10 @@
  */
 
 // Secure session configuration
-if (session_status() === PHP_SESSION_NONE) {
+if (php_sapi_name() !== 'cli' && session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_httponly', 1);
     ini_set('session.use_only_cookies', 1);
-    $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || ($_SERVER['SERVER_PORT'] == 443);
+    $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
     if ($isSecure) {
         ini_set('session.cookie_secure', 1);
     }

@@ -70,11 +70,87 @@ $properties = [
 
 // Determine selected property
 $selectedSlug = isset($_GET['property']) ? trim($_GET['property']) : 'eco-solar';
-if (!array_key_exists($selectedSlug, $properties)) {
-    $selectedSlug = 'eco-solar';
+
+$property = null;
+
+// Query from database first
+try {
+    $db = db();
+    $stmt = $db->prepare("SELECT * FROM `projects` WHERE `slug` = ?");
+    $stmt->execute([$selectedSlug]);
+    $dbProperty = $stmt->fetch();
+} catch (\Exception $e) {
+    $dbProperty = null;
 }
 
-$property = $properties[$selectedSlug];
+if ($dbProperty) {
+    $property = [
+        'title' => $dbProperty['title'],
+        'location' => $dbProperty['location'],
+        'price' => $dbProperty['price'],
+        'beds' => $dbProperty['beds'],
+        'baths' => $dbProperty['baths'],
+        'sqft' => $dbProperty['sqft'],
+        'garages' => $dbProperty['garages'],
+        'year' => $dbProperty['year'],
+        'image' => $dbProperty['image'],
+        'gallery' => json_decode($dbProperty['gallery'] ?? '[]', true),
+        'desc' => $dbProperty['desc'],
+        'tag' => $dbProperty['tag'],
+        'raw_price' => $dbProperty['raw_price'],
+        'google_map' => $dbProperty['google_map'],
+        'proximity' => json_decode($dbProperty['proximity_distances'] ?? '[]', true),
+        'is_db' => true
+    ];
+} else {
+    // Fallback to hardcoded mock array
+    if (!array_key_exists($selectedSlug, $properties)) {
+        $selectedSlug = 'eco-solar';
+    }
+    $mockProp = $properties[$selectedSlug];
+    $property = [
+        'title' => $mockProp['title'],
+        'location' => $mockProp['location'],
+        'price' => $mockProp['price'],
+        'beds' => $mockProp['beds'],
+        'baths' => $mockProp['baths'],
+        'sqft' => $mockProp['sqft'],
+        'garages' => $mockProp['garages'],
+        'year' => $mockProp['year'],
+        'image' => $mockProp['image'],
+        'gallery' => $mockProp['gallery'],
+        'desc' => $mockProp['desc'],
+        'tag' => $mockProp['tag'],
+        'raw_price' => $mockProp['raw_price'],
+        'google_map' => '',
+        'proximity' => [
+            ['name' => 'Delhi Public School', 'distance' => '1.2 km', 'icon' => 'school'],
+            ['name' => 'Omaxe World Street Mall', 'distance' => '0.5 km', 'icon' => 'mall'],
+            ['name' => 'Fortis Hospital', 'distance' => '3.4 km', 'icon' => 'hospital'],
+            ['name' => 'IGI Airport', 'distance' => '42 km', 'icon' => 'plane']
+        ],
+        'is_db' => false
+    ];
+}
+
+// SVG icon mapper for proximity locations
+if (!function_exists('getProximityIconSvg')) {
+    function getProximityIconSvg($iconName) {
+        switch ($iconName) {
+            case 'school':
+                return '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M6 18.8v-4L2 13v6a1 1 0 0 0 1 1h3Z"/><path d="M21.5 13v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-4.5"/></svg>';
+            case 'mall':
+                return '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>';
+            case 'hospital':
+                return '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-pulse"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l1.5-3.5L13 15l1.5-4.5 1.5 1.5h2.78"/></svg>';
+            case 'plane':
+            case 'airport':
+                return '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plane"><path d="M21 16V8a2 2 0 0 0-2-2h-3.38L10 2H8v4H4.5A2.5 2.5 0 0 0 2 8.5v3A2.5 2.5 0 0 0 4.5 14H8v4h2l5.62-4H19a2 2 0 0 0 2-2Z"/><path d="M17 12h.01"/></svg>';
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
+        }
+    }
+}
 
 // Load header include
 require_once __DIR__ . '/includes/header.php';
@@ -117,11 +193,15 @@ require_once __DIR__ . '/includes/header.php';
             <div class="gallery-main-box custom-border-img">
                 <img src="<?php echo htmlspecialchars($property['image']); ?>" alt="Main Exterior" class="gallery-large-img">
             </div>
+            <?php 
+            $gallery0 = !empty($property['gallery'][0]) ? $property['gallery'][0] : $property['image'];
+            $gallery1 = !empty($property['gallery'][1]) ? $property['gallery'][1] : (!empty($property['gallery'][0]) ? $property['gallery'][0] : $property['image']);
+            ?>
             <div class="gallery-side-box side-top custom-border-img">
-                <img src="<?php echo htmlspecialchars($property['gallery'][0]); ?>" alt="Interior Room view">
+                <img src="<?php echo htmlspecialchars($gallery0); ?>" alt="Interior Room view">
             </div>
             <div class="gallery-side-box side-bottom custom-border-img">
-                <img src="<?php echo htmlspecialchars($property['gallery'][1]); ?>" alt="Pool and Terrace view">
+                <img src="<?php echo htmlspecialchars($gallery1); ?>" alt="Pool and Terrace view">
             </div>
         </div>
 
@@ -171,9 +251,15 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Description -->
                 <div class="detail-section">
                     <h3 class="detail-section-title">Property Description</h3>
-                    <p class="detail-desc-paragraph">
-                        <?php echo nl2br(htmlspecialchars($property['desc'])); ?>
-                    </p>
+                    <div class="detail-desc-paragraph">
+                        <?php 
+                        if (!empty($property['is_db'])) {
+                            echo $property['desc'];
+                        } else {
+                            echo '<p>' . nl2br(htmlspecialchars($property['desc'])) . '</p>';
+                        }
+                        ?>
+                    </div>
                 </div>
 
                 <!-- Amenities List -->
@@ -262,33 +348,45 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Distance Mapping -->
                 <div class="detail-section">
                     <h3 class="detail-section-title">Location & Proximity</h3>
-                    <div class="proximity-map-box custom-border-md">
-                        <!-- Mock Map Background -->
-                        <div class="mock-map-bg">
-                            <div class="map-marker-pin">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin fill-gold"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                                <span class="marker-text"><?php echo htmlspecialchars($property['title']); ?></span>
+                    
+                    <?php if (!empty($property['google_map'])): ?>
+                        <div class="google-map-container custom-border-md mb-4" style="height: 350px; width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px;">
+                            <?php 
+                            $mapIframe = $property['google_map'];
+                            // Make iframe fully responsive
+                            $mapIframe = preg_replace('/width="\d+"/', 'width="100%"', $mapIframe);
+                            $mapIframe = preg_replace('/height="\d+"/', 'height="100%"', $mapIframe);
+                            // Set height to 100% in style as well if any
+                            if (strpos($mapIframe, 'style=') !== false) {
+                                $mapIframe = preg_replace('/style="([^"]*)"/', 'style="border:0; width:100%; height:100%;"', $mapIframe);
+                            } else {
+                                $mapIframe = str_replace('<iframe ', '<iframe style="border:0; width:100%; height:100%;" ', $mapIframe);
+                            }
+                            echo $mapIframe;
+                            ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="proximity-map-box custom-border-md mb-4" style="margin-bottom: 20px;">
+                            <!-- Mock Map Background -->
+                            <div class="mock-map-bg">
+                                <div class="map-marker-pin">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin fill-gold"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    <span class="marker-text"><?php echo htmlspecialchars($property['title']); ?></span>
+                                </div>
                             </div>
                         </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($property['proximity'])): ?>
                         <div class="proximity-distances-grid">
-                            <div class="proximity-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M6 18.8v-4L2 13v6a1 1 0 0 0 1 1h3Z"/><path d="M21.5 13v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-4.5"/></svg>
-                                <span>Delhi Public School (1.2 km)</span>
-                            </div>
-                            <div class="proximity-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                                <span>Omaxe World Street Mall (0.5 km)</span>
-                            </div>
-                            <div class="proximity-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-pulse"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l1.5-3.5L13 15l1.5-4.5 1.5 1.5h2.78"/></svg>
-                                <span>Fortis Hospital (3.4 km)</span>
-                            </div>
-                            <div class="proximity-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plane"><path d="M21 16V8a2 2 0 0 0-2-2h-3.38L10 2H8v4H4.5A2.5 2.5 0 0 0 2 8.5v3A2.5 2.5 0 0 0 4.5 14H8v4h2l5.62-4H19a2 2 0 0 0 2-2Z"/><path d="M17 12h.01"/></svg>
-                                <span>IGI Airport (42 km)</span>
-                            </div>
+                            <?php foreach ($property['proximity'] as $item): ?>
+                                <div class="proximity-item">
+                                    <?php echo getProximityIconSvg($item['icon'] ?? ''); ?>
+                                    <span><?php echo htmlspecialchars($item['name']); ?> (<?php echo htmlspecialchars($item['distance']); ?>)</span>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
