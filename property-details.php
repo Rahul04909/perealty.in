@@ -588,6 +588,7 @@ $(document).ready(function() {
         });
     });
 });
+</script>
 
 <?php
 // Load footer include
