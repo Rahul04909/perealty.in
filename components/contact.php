@@ -26,7 +26,7 @@
                         </div>
                         <div class="contact-text">
                             <span class="contact-label">Call Us Directly</span>
-                            <a href="tel:+919310104249" class="contact-link">+91 93101 04249</a>
+                            <a href="tel:<?php echo htmlspecialchars(env('CONTACT_PHONE_RAW', '+919310104249')); ?>" class="contact-link"><?php echo htmlspecialchars(env('CONTACT_PHONE', '+91 93101 04249')); ?></a>
                         </div>
                     </div>
 
@@ -37,7 +37,7 @@
                         </div>
                         <div class="contact-text">
                             <span class="contact-label">Email Our Consultants</span>
-                            <a href="mailto:invest@peprealty.com" class="contact-link">invest@peprealty.com</a>
+                            <a href="mailto:<?php echo htmlspecialchars(env('CONTACT_EMAIL', 'invest@peprealty.com')); ?>" class="contact-link"><?php echo htmlspecialchars(env('CONTACT_EMAIL', 'invest@peprealty.com')); ?></a>
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@
                         </div>
                         <div class="contact-text">
                             <span class="contact-label">Headquarters</span>
-                            <address class="contact-address">198 SCO 1st Floor, Omaxe World Street, Sector 79 Faridabad 121002</address>
+                            <address class="contact-address"><?php echo htmlspecialchars(env('CONTACT_ADDRESS', '198 SCO 1st Floor, Omaxe World Street, Sector 79 Faridabad 121002')); ?></address>
                         </div>
                     </div>
                 </div>

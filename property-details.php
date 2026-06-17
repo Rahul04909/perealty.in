@@ -4,6 +4,9 @@
  * Dynamic Detail View
  */
 
+// Load Central Config & Autoloader
+require_once __DIR__ . '/config.php';
+
 // Define mock database of properties
 $properties = [
     'eco-solar' => [
@@ -297,17 +300,17 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="agent-form-card">
                         <div class="agent-profile">
                             <div class="agent-avatar">
-                                <img src="assets/images/agent_portrait.png" alt="Anil Mehra">
+                                <img src="assets/images/agent_portrait.png" alt="<?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra')); ?>">
                             </div>
                             <div class="agent-meta">
-                                <h4 class="agent-name">Anil Mehra</h4>
-                                <span class="agent-role">Founder & Director</span>
-                                <a href="tel:+919310104249" class="agent-phone">+91 93101 04249</a>
+                                <h4 class="agent-name"><?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra')); ?></h4>
+                                <span class="agent-role"><?php echo htmlspecialchars(env('CONTACT_AGENT_ROLE', 'Founder & Director')); ?></span>
+                                <a href="tel:<?php echo htmlspecialchars(env('CONTACT_PHONE_RAW', '+919310104249')); ?>" class="agent-phone"><?php echo htmlspecialchars(env('CONTACT_PHONE', '+91 93101 04249')); ?></a>
                             </div>
                         </div>
 
                         <!-- Sidebar Enquiry Form -->
-                        <form class="sidebar-inquiry-form" onsubmit="event.preventDefault(); alert('Your inquiry has been successfully sent to Anil Mehra. We will reach out shortly.'); this.reset();">
+                        <form class="sidebar-inquiry-form" onsubmit="event.preventDefault(); alert('Your inquiry has been successfully sent to <?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra'), ENT_QUOTES); ?>. We will reach out shortly.'); this.reset();">
                             <div class="form-group">
                                 <input type="text" placeholder="Your Full Name" required class="sidebar-input">
                             </div>

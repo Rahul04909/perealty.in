@@ -8,10 +8,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Edge Realiity | Your Edge in Smart Investments</title>
-    <meta name="description" content="Prime Edge Realiity offers premium real estate solutions, modern residential apartments, luxury houses, and smart property investment opportunities with over 20 years of expertise.">
-    <meta name="keywords" content="Real Estate, Prime Edge Realiity, Luxury Homes, Smart Investments, Property Valuation, Property Management">
-    <meta name="author" content="Prime Edge Realiity">
+    <title><?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> | <?php echo htmlspecialchars(env('APP_TAGLINE', 'Your Edge in Smart Investments')); ?></title>
+    <meta name="description" content="<?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> offers premium real estate solutions, modern residential apartments, luxury houses, and smart property investment opportunities with over 20 years of expertise.">
+    <meta name="keywords" content="Real Estate, <?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?>, Luxury Homes, Smart Investments, Property Valuation, Property Management">
+    <meta name="author" content="<?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?>">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
@@ -38,10 +38,16 @@
         <div class="container header-container">
             <!-- Logo Section -->
             <a href="index.php" class="logo-area" id="logo-link">
-                <img src="assets/logo/logo.png" alt="Prime Edge Realiity Logo" class="logo-img">
+                <img src="assets/logo/logo.png" alt="<?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> Logo" class="logo-img">
                 <span class="logo-text">
-                    <span class="logo-title">PRIME EDGE</span>
-                    <span class="logo-subtitle">REALIITY</span>
+                    <span class="logo-title"><?php 
+                        $appName = env('APP_NAME', 'Prime Edge Realiity');
+                        $words = explode(' ', $appName);
+                        echo htmlspecialchars(strtoupper($words[0] . (isset($words[1]) ? ' ' . $words[1] : '')));
+                    ?></span>
+                    <span class="logo-subtitle"><?php 
+                        echo htmlspecialchars(strtoupper(isset($words[2]) ? $words[2] : ''));
+                    ?></span>
                 </span>
             </a>
 
@@ -75,10 +81,16 @@
     <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
         <div class="drawer-header">
             <a href="index.php" class="logo-area">
-                <img src="assets/logo/logo.png" alt="Prime Edge Realiity Logo" class="logo-img">
+                <img src="assets/logo/logo.png" alt="<?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> Logo" class="logo-img">
                 <span class="logo-text">
-                    <span class="logo-title">PRIME EDGE</span>
-                    <span class="logo-subtitle">REALIITY</span>
+                    <span class="logo-title"><?php 
+                        $appName = env('APP_NAME', 'Prime Edge Realiity');
+                        $words = explode(' ', $appName);
+                        echo htmlspecialchars(strtoupper($words[0] . (isset($words[1]) ? ' ' . $words[1] : '')));
+                    ?></span>
+                    <span class="logo-subtitle"><?php 
+                        echo htmlspecialchars(strtoupper(isset($words[2]) ? $words[2] : ''));
+                    ?></span>
                 </span>
             </a>
             <button class="drawer-close" id="drawer-close-btn" aria-label="Close Menu">

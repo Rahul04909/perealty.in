@@ -49,7 +49,7 @@
                         <path id="textCirclePath" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" fill="transparent" />
                         <text>
                             <textPath href="#textCirclePath" class="stamp-svg-text" startOffset="0%">
-                                PRIME EDGE REALIITY • ANIL MEHRA •
+                                <?php echo htmlspecialchars(strtoupper(env('APP_NAME', 'Prime Edge Realiity'))); ?> • <?php echo htmlspecialchars(strtoupper(env('CONTACT_AGENT_NAME', 'Anil Mehra'))); ?> •
                             </textPath>
                         </text>
                     </svg>

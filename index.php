@@ -4,6 +4,9 @@
  * Main Entry Point
  */
 
+// Load Central Config & Autoloader
+require_once __DIR__ . '/config.php';
+
 // Load Header (includes doctype, meta tags, assets styles & navigation menu)
 require_once __DIR__ . '/includes/header.php';
 

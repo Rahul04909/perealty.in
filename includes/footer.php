@@ -9,14 +9,20 @@
             <!-- Footer Brand & Info -->
             <div class="footer-col brand-col">
                 <a href="index.php" class="logo-area footer-logo">
-                    <img src="assets/logo/logo.png" alt="Prime Edge Realiity Logo" class="logo-img">
+                    <img src="assets/logo/logo.png" alt="<?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> Logo" class="logo-img">
                     <span class="logo-text">
-                        <span class="logo-title">PRIME EDGE</span>
-                        <span class="logo-subtitle">REALIITY</span>
+                        <span class="logo-title"><?php 
+                            $appName = env('APP_NAME', 'Prime Edge Realiity');
+                            $words = explode(' ', $appName);
+                            echo htmlspecialchars(strtoupper($words[0] . (isset($words[1]) ? ' ' . $words[1] : '')));
+                        ?></span>
+                        <span class="logo-subtitle"><?php 
+                            echo htmlspecialchars(strtoupper(isset($words[2]) ? $words[2] : ''));
+                        ?></span>
                     </span>
                 </a>
                 <p class="footer-desc">
-                    Prime Edge Realiity is a premier real estate firm dedicated to delivering your edge in smart investments. We turn property search into a personalized luxury experience.
+                    <?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> is a premier real estate firm dedicated to delivering <?php echo htmlspecialchars(strtolower(env('APP_TAGLINE', 'Your Edge in Smart Investments'))); ?>. We turn property search into a personalized luxury experience.
                 </p>
                 <div class="footer-socials">
                     <a href="#" class="social-icon" aria-label="Facebook">
@@ -76,7 +82,7 @@
         <!-- Copyright Bar -->
         <div class="footer-bottom">
             <div class="container footer-bottom-container">
-                <p class="copyright-text">&copy; <?php echo date("Y"); ?> Prime Edge Realiity. All rights reserved. | A website Designed & Developed By <a href="https://mineib.com" target="_blank" rel="noopener" style="color: var(--color-accent); font-weight: 600;">Mineib</a></p>
+                <p class="copyright-text">&copy; <?php echo date("Y"); ?> <?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?>. All rights reserved. | A website Designed & Developed By <a href="<?php echo htmlspecialchars(env('DEVELOPER_URL', 'https://mineib.com')); ?>" target="_blank" rel="noopener" style="color: var(--color-accent); font-weight: 600;"><?php echo htmlspecialchars(env('DEVELOPER_NAME', 'Mineib')); ?></a></p>
                 <div class="footer-bottom-links">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms & Conditions</a>
