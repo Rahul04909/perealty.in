@@ -40,15 +40,24 @@
                 </div>
             </div>
 
-            <!-- Footer Links (Services) -->
-            <div class="footer-col links-col">
-                <h4 class="footer-title">Services</h4>
+            <!-- Footer Links (Office Info) -->
+            <div class="footer-col office-col">
+                <h4 class="footer-title">Office Info</h4>
                 <ul class="footer-links-list">
-                    <li><a href="index.php#about"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Property Valuation</a></li>
-                    <li><a href="index.php#about"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Property Management</a></li>
-                    <li><a href="index.php#about"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Investment Opportunities</a></li>
-                    <li><a href="index.php#projects"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Residential Development</a></li>
-                    <li><a href="index.php#projects"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Commercial Leasing</a></li>
+                    <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.5;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 4px;"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <a href="https://maps.google.com/?q=<?php echo urlencode(env('CONTACT_ADDRESS', '198 SCO 1st Floor, Omaxe World Street, Sector 79 Faridabad 121002')); ?>" target="_blank" rel="noopener" class="footer-info-link" style="color: var(--color-text-muted); font-size: 0.95rem; transition: var(--transition-fast);">
+                            <?php echo htmlspecialchars(env('CONTACT_ADDRESS', '198 SCO 1st Floor, Omaxe World Street, Sector 79 Faridabad 121002')); ?>
+                        </a>
+                    </li>
+                    <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.5; margin-top: 0.5rem; color: var(--color-text-muted); font-size: 0.95rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <div>
+                            <strong style="color: var(--color-text-light); font-weight: 600;">Office Hours:</strong><br>
+                            Mon - Sat: 9:00 AM - 6:00 PM<br>
+                            Sunday: Closed
+                        </div>
+                    </li>
                 </ul>
             </div>
 
@@ -58,7 +67,7 @@
                 <ul class="footer-links-list">
                     <li><a href="index.php#hero"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Home</a></li>
                     <li><a href="about.php"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> About Us</a></li>
-                    <li><a href="index.php#projects"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Properties</a></li>
+                    <li><a href="properties.php"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Properties</a></li>
                     <li><a href="index.php#testimonials"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Testimonials</a></li>
                     <li><a href="contact.php"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Contact Us</a></li>
                 </ul>
