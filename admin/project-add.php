@@ -34,6 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $desc = $_POST['desc'] ?? '';
         $google_map = $_POST['google_map'] ?? '';
         
+        // SEO Fields
+        $seo_title = trim($_POST['seo_title'] ?? '');
+        $seo_desc = trim($_POST['seo_desc'] ?? '');
+        $seo_keywords = trim($_POST['seo_keywords'] ?? '');
+        
         // Validation
         if (empty($title) || empty($slug) || empty($location) || empty($price) || empty($raw_price) || empty($desc)) {
             $error = 'Please fill out all required fields (Title, Slug, Location, Price, Raw Price, Description).';
@@ -98,6 +103,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
                 
+                // Process Floor Plans Upload
+                $floorPlans = [];
+                if (empty($error) && !empty($_POST['floor_plan_title'])) {
+                    $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                    $uploadDir = dirname(__DIR__) . '/uploads/projects/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0755, true);
+                    }
+                    
+                    for ($k = 0; $k < count($_POST['floor_plan_title']); $k++) {
+                        $pTitle = trim($_POST['floor_plan_title'][$k]);
+                        $pDesc = trim($_POST['floor_plan_desc'][$k]);
+                        
+                        $fpImagePath = '';
+                        // Check if an image is uploaded for this plan
+                        if (!empty($_FILES['floor_plan_image']['name'][$k])) {
+                            if ($_FILES['floor_plan_image']['error'][$k] === UPLOAD_ERR_OK) {
+                                $ext = strtolower(pathinfo($_FILES['floor_plan_image']['name'][$k], PATHINFO_EXTENSION) ?? '');
+                                if (in_array($ext, $allowedExts)) {
+                                    $fpName = 'floor_plan_' . uniqid('', true) . '_' . $k . '.' . $ext;
+                                    if (move_uploaded_file($_FILES['floor_plan_image']['tmp_name'][$k], $uploadDir . $fpName)) {
+                                        $fpImagePath = 'uploads/projects/' . $fpName;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if (!empty($pTitle)) {
+                            $floorPlans[] = [
+                                'title' => $pTitle,
+                                'desc' => $pDesc,
+                                'image' => $fpImagePath
+                            ];
+                        }
+                    }
+                }
+                
                 // Process Proximity Distances
                 $proximity = [];
                 if (empty($error) && !empty($_POST['proximity_name'])) {
@@ -119,8 +161,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Insert project into DB
                 if (empty($error)) {
                     $insert = $db->prepare("INSERT INTO `projects` 
-                        (`slug`, `title`, `location`, `price`, `raw_price`, `beds`, `baths`, `sqft`, `garages`, `year`, `image`, `gallery`, `desc`, `tag`, `google_map`, `proximity_distances`) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        (`slug`, `title`, `location`, `price`, `raw_price`, `beds`, `baths`, `sqft`, `garages`, `year`, `image`, `gallery`, `desc`, `tag`, `seo_title`, `seo_desc`, `seo_keywords`, `floor_plans`, `google_map`, `proximity_distances`) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     
                     $insert->execute([
                         $slug,
@@ -137,6 +179,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         json_encode($galleryPaths),
                         $desc,
                         $tag,
+                        $seo_title,
+                        $seo_desc,
+                        $seo_keywords,
+                        json_encode($floorPlans),
                         $google_map,
                         json_encode($proximity)
                     ]);
@@ -144,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $success = 'Project created successfully!';
                     
                     // Reset fields on success
-                    $title = $slug = $location = $price = $sqft = $tag = $desc = $google_map = '';
+                    $title = $slug = $location = $price = $sqft = $tag = $desc = $google_map = $seo_title = $seo_desc = $seo_keywords = '';
                     $raw_price = $beds = $baths = $garages = 0;
                     $year = date('Y');
                 }
@@ -281,7 +327,39 @@ $page_title = "Add Project";
                             <textarea name="desc" class="form-control editor" rows="6"><?php echo htmlspecialchars($desc ?? ''); ?></textarea>
                         </div>
 
-                        <!-- Section 4: Map & Proximity -->
+                        <!-- Section 4: Floor Plans -->
+                        <h5 class="text-success font-weight-bold border-bottom pb-2 mb-3 mt-4"><i class="fas fa-layer-group me-1"></i> Floor Plans</h5>
+                        
+                        <div class="mb-3">
+                            <label class="form-label font-weight-bold text-muted d-block">Manage Property Floor Plans</label>
+                            
+                            <div id="floor-plans-container">
+                                <!-- Dynamic floor plan rows added here -->
+                                <div class="floor-plan-row border rounded p-3 mb-3 bg-light position-relative">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label font-weight-bold text-muted" style="font-size:0.8rem;">Plan Level / Title</label>
+                                            <input type="text" name="floor_plan_title[]" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" placeholder="e.g. Ground Level Floor Plan">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label font-weight-bold text-muted" style="font-size:0.8rem;">Schematic Image</label>
+                                            <input type="file" name="floor_plan_image[]" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label font-weight-bold text-muted" style="font-size:0.8rem;">Plan Content Description</label>
+                                            <textarea name="floor_plan_desc[]" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" rows="2" placeholder="Describe the layout room structure, dimensions, balconies, etc."></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-danger btn-remove-floor-plan" style="position: absolute; top: 10px; right: 10px; z-index:10;"><i class="fas fa-trash-alt"></i> Remove</button>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn btn-outline-success btn-sm mt-2" id="btn-add-floor-plan">
+                                <i class="fas fa-plus-circle me-1"></i> Add Floor Plan Level
+                            </button>
+                        </div>
+
+                        <!-- Section 5: Map & Proximity -->
                         <h5 class="text-success font-weight-bold border-bottom pb-2 mb-3 mt-4"><i class="fas fa-map-marked-alt me-1"></i> Location Mapping & Proximity</h5>
                         
                         <div class="mb-4">
@@ -319,6 +397,23 @@ $page_title = "Add Project";
                             <button type="button" class="btn btn-outline-success btn-sm mt-2" id="btn-add-proximity">
                                 <i class="fas fa-plus-circle me-1"></i> Add Proximity Item
                             </button>
+                        </div>
+
+                        <!-- Section 6: SEO Configurations -->
+                        <h5 class="text-success font-weight-bold border-bottom pb-2 mb-3 mt-4"><i class="fas fa-search me-1"></i> SEO Configurations</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label font-weight-bold text-muted">SEO Meta Title</label>
+                                <input type="text" name="seo_title" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" placeholder="Custom meta title for search engines" value="<?php echo htmlspecialchars($seo_title ?? ''); ?>">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label font-weight-bold text-muted">SEO Meta Keywords</label>
+                                <input type="text" name="seo_keywords" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" placeholder="Comma-separated keywords" value="<?php echo htmlspecialchars($seo_keywords ?? ''); ?>">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label font-weight-bold text-muted">SEO Meta Description</label>
+                                <textarea name="seo_desc" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" rows="3" placeholder="Enter a search-engine friendly summary snippet (150-160 characters)"><?php echo htmlspecialchars($seo_desc ?? ''); ?></textarea>
+                            </div>
                         </div>
                     </div>
                     
@@ -396,6 +491,37 @@ $(document).ready(function() {
             $(this).closest('.proximity-row').remove();
         } else {
             $(this).closest('.proximity-row').find('input').val('');
+        }
+    });
+
+    // 4. Floor plans dynamic items addition/removal
+    $('#btn-add-floor-plan').on('click', function() {
+        var rowMarkup = `
+        <div class="floor-plan-row border rounded p-3 mb-3 bg-light position-relative">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label font-weight-bold text-muted" style="font-size:0.8rem;">Plan Level / Title</label>
+                    <input type="text" name="floor_plan_title[]" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" placeholder="e.g. First Level Floor Plan">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label font-weight-bold text-muted" style="font-size:0.8rem;">Schematic Image</label>
+                    <input type="file" name="floor_plan_image[]" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;">
+                </div>
+                <div class="col-12">
+                    <label class="form-label font-weight-bold text-muted" style="font-size:0.8rem;">Plan Content Description</label>
+                    <textarea name="floor_plan_desc[]" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" rows="2" placeholder="Describe the layout room structure, dimensions, balconies, etc."></textarea>
+                </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-danger btn-remove-floor-plan" style="position: absolute; top: 10px; right: 10px; z-index:10;"><i class="fas fa-trash-alt"></i> Remove</button>
+        </div>`;
+        $('#floor-plans-container').append(rowMarkup);
+    });
+
+    $(document).on('click', '.btn-remove-floor-plan', function() {
+        if ($('.floor-plan-row').length > 1) {
+            $(this).closest('.floor-plan-row').remove();
+        } else {
+            $(this).closest('.floor-plan-row').find('input, textarea').val('');
         }
     });
 });

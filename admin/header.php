@@ -22,7 +22,8 @@ $menuItems = [
         "icon" => "fas fa-building",
         "pages" => [
             ["title" => "All Projects", "url" => "projects.php"],
-            ["title" => "Add Project", "url" => "project-add.php"]
+            ["title" => "Add Project", "url" => "project-add.php"],
+            ["title" => "Client Enquiries", "url" => "enquiries.php"]
         ],
     ],
     [

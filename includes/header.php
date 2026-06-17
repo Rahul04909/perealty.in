@@ -8,10 +8,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> | <?php echo htmlspecialchars(env('APP_TAGLINE', 'Your Edge in Smart Investments')); ?></title>
-    <meta name="description" content="<?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> offers premium real estate solutions, modern residential apartments, luxury houses, and smart property investment opportunities with over 20 years of expertise.">
-    <meta name="keywords" content="Real Estate, <?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?>, Luxury Homes, Smart Investments, Property Valuation, Property Management">
+    <title><?php echo isset($meta_title) ? htmlspecialchars($meta_title) : htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')) . ' | ' . htmlspecialchars(env('APP_TAGLINE', 'Your Edge in Smart Investments')); ?></title>
+    <meta name="description" content="<?php echo isset($meta_desc) ? htmlspecialchars($meta_desc) : htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')) . ' offers premium real estate solutions, modern residential apartments, luxury houses, and smart property investment opportunities with over 20 years of expertise.'; ?>">
+    <meta name="keywords" content="<?php echo isset($meta_keywords) ? htmlspecialchars($meta_keywords) : 'Real Estate, ' . htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')) . ', Luxury Homes, Smart Investments, Property Valuation, Property Management'; ?>">
     <meta name="author" content="<?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?>">
+    
+    <!-- Automatic OpenGraph Tags -->
+    <?php if (isset($og_tags) && is_array($og_tags)): ?>
+        <?php foreach ($og_tags as $property => $content): ?>
+            <meta property="<?php echo htmlspecialchars($property); ?>" content="<?php echo htmlspecialchars($content); ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <!-- Automatic Schema Structured Data -->
+    <?php if (isset($schema_json) && !empty($schema_json)): ?>
+        <script type="application/ld+json">
+            <?php echo $schema_json; ?>
+        </script>
+    <?php endif; ?>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">

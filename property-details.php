@@ -85,6 +85,7 @@ try {
 
 if ($dbProperty) {
     $property = [
+        'id' => $dbProperty['id'],
         'title' => $dbProperty['title'],
         'location' => $dbProperty['location'],
         'price' => $dbProperty['price'],
@@ -98,6 +99,10 @@ if ($dbProperty) {
         'desc' => $dbProperty['desc'],
         'tag' => $dbProperty['tag'],
         'raw_price' => $dbProperty['raw_price'],
+        'seo_title' => $dbProperty['seo_title'],
+        'seo_desc' => $dbProperty['seo_desc'],
+        'seo_keywords' => $dbProperty['seo_keywords'],
+        'floor_plans' => json_decode($dbProperty['floor_plans'] ?? '[]', true),
         'google_map' => $dbProperty['google_map'],
         'proximity' => json_decode($dbProperty['proximity_distances'] ?? '[]', true),
         'is_db' => true
@@ -108,7 +113,52 @@ if ($dbProperty) {
         $selectedSlug = 'eco-solar';
     }
     $mockProp = $properties[$selectedSlug];
+    
+    // Seed default floor plans for static mock objects
+    $mockFloorPlans = [];
+    if ($selectedSlug === 'eco-solar') {
+        $mockFloorPlans = [
+            [
+                'title' => 'Ground Level Floor Plan',
+                'desc' => 'Large open-floor plan combining double grand salon lounge, state-of-the-art kitchen, secondary bedroom with attached bath, and garden deck sliders.',
+                'image' => 'assets/images/about_house_one.png'
+            ],
+            [
+                'title' => 'First Level Floor Plan',
+                'desc' => 'Hosts the premium master bedroom wing featuring massive walk-in closets, luxury master bath with custom spa tubs, and balconies.',
+                'image' => 'assets/images/about_house_two.png'
+            ]
+        ];
+    } elseif ($selectedSlug === 'cubic-glass') {
+        $mockFloorPlans = [
+            [
+                'title' => 'Cubic Ground Floor Plan',
+                'desc' => 'Geometrical concrete layout with master dining rooms, guest lounges, and integrated smart control utilities.',
+                'image' => 'assets/images/about_house_one.png'
+            ],
+            [
+                'title' => 'Cubic First Level Plan',
+                'desc' => 'Premium spa decks, individual suite chambers, and terrace access channels.',
+                'image' => 'assets/images/hero_house.png'
+            ]
+        ];
+    } else {
+        $mockFloorPlans = [
+            [
+                'title' => 'Mansion Ground Level Layout',
+                'desc' => 'Double-height grand salon chambers, professional Italian chef kitchen facilities, and internal elevator portals.',
+                'image' => 'assets/images/promo_apartment.png'
+            ],
+            [
+                'title' => 'Mansion Master Level Layout',
+                'desc' => 'Full master suite wings with dual walk-in dressing halls, private studies, and security monitor nodes.',
+                'image' => 'assets/images/about_house_two.png'
+            ]
+        ];
+    }
+
     $property = [
+        'id' => 0,
         'title' => $mockProp['title'],
         'location' => $mockProp['location'],
         'price' => $mockProp['price'],
@@ -122,6 +172,10 @@ if ($dbProperty) {
         'desc' => $mockProp['desc'],
         'tag' => $mockProp['tag'],
         'raw_price' => $mockProp['raw_price'],
+        'seo_title' => $mockProp['title'] . ' | Luxury Real Estate Faridabad',
+        'seo_desc' => strip_tags(html_entity_decode($mockProp['desc'])),
+        'seo_keywords' => 'luxury villa, real estate faridabad, prime edge residence',
+        'floor_plans' => $mockFloorPlans,
         'google_map' => '',
         'proximity' => [
             ['name' => 'Delhi Public School', 'distance' => '1.2 km', 'icon' => 'school'],
@@ -132,6 +186,66 @@ if ($dbProperty) {
         'is_db' => false
     ];
 }
+
+// Generate SEO Meta, OpenGraph & Schema variables
+$meta_title = !empty($property['seo_title']) ? $property['seo_title'] : $property['title'] . ' | ' . env('APP_NAME', 'Prime Edge Realiity');
+$meta_desc = !empty($property['seo_desc']) ? $property['seo_desc'] : strip_tags(html_entity_decode($property['desc']));
+if (strlen($meta_desc) > 160) {
+    $meta_desc = substr($meta_desc, 0, 157) . '...';
+}
+$meta_keywords = !empty($property['seo_keywords']) ? $property['seo_keywords'] : $property['title'] . ', real estate, Faridabad, property';
+
+// Determine absolute URLs
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http';
+$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+$currentUrl = $protocol . '://' . $host . $_SERVER['REQUEST_URI'];
+$absoluteImage = strpos($property['image'], 'assets/') === false ? $protocol . '://' . $host . '/' . $property['image'] : $protocol . '://' . $host . '/peprealty.com/' . $property['image'];
+
+// Normalize absolute URLs (avoid double-slashes)
+$absoluteImage = preg_replace('/([^:])(\/{2,})/', '$1/', $absoluteImage);
+$currentUrl = preg_replace('/([^:])(\/{2,})/', '$1/', $currentUrl);
+
+// Dynamic OpenGraph Meta Tags
+$og_tags = [
+    'og:title' => $meta_title,
+    'og:description' => $meta_desc,
+    'og:image' => $absoluteImage,
+    'og:url' => $currentUrl,
+    'og:type' => 'website',
+    'og:site_name' => env('APP_NAME', 'Prime Edge Realiity')
+];
+
+// Dynamic Schema JSON-LD (SingleFamilyResidence representation)
+$schema_data = [
+    '@context' => 'https://schema.org',
+    '@type' => 'SingleFamilyResidence',
+    'name' => $property['title'],
+    'description' => strip_tags(html_entity_decode($property['desc'])),
+    'image' => $absoluteImage,
+    'address' => [
+        '@type' => 'PostalAddress',
+        'streetAddress' => $property['location'],
+        'addressLocality' => 'Faridabad',
+        'addressRegion' => 'Haryana',
+        'addressCountry' => 'IN'
+    ],
+    'numberOfRooms' => (int)($property['beds'] + $property['baths']),
+    'numberOfBedrooms' => (int)$property['beds'],
+    'numberOfBathroomsTotal' => (int)$property['baths'],
+    'floorSize' => [
+        '@type' => 'QuantitativeValue',
+        'value' => (float)str_replace(',', '', $property['sqft']),
+        'unitCode' => 'FTK'
+    ],
+    'offers' => [
+        '@type' => 'Offer',
+        'price' => (float)$property['raw_price'],
+        'priceCurrency' => 'INR',
+        'availability' => 'https://schema.org/InStock',
+        'url' => $currentUrl
+    ]
+];
+$schema_json = json_encode($schema_data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 // SVG icon mapper for proximity locations
 if (!function_exists('getProximityIconSvg')) {
@@ -304,45 +418,34 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Interactive Floor Plans -->
                 <div class="detail-section">
                     <h3 class="detail-section-title">Floor Plans</h3>
-                    <div class="floor-plans-container">
-                        <!-- Floor Level 1 -->
-                        <div class="floor-accordion-item">
-                            <button class="floor-accordion-header" onclick="this.parentElement.classList.toggle('active')">
-                                <span>Ground Level Floor Plan</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down acc-arrow"><path d="m6 9 6 6 6-6"/></svg>
-                            </button>
-                            <div class="floor-accordion-content">
-                                <p class="floor-plan-desc">Large open-floor plan combining double grand salon lounge, state-of-the-art kitchen, secondary bedroom with attached bath, and floor-to-ceiling glass screen sliders connecting directly with the garden deck and infinity pool.</p>
-                                <div class="floor-plan-img-mock custom-border-md">
-                                    <div class="mock-plan-layout">
-                                        <div class="mock-plan-room">Grand Salon</div>
-                                        <div class="mock-plan-room">Kitchen</div>
-                                        <div class="mock-plan-room">Bedroom</div>
-                                        <div class="mock-plan-room">Deck / Pool</div>
+                    <?php if (!empty($property['floor_plans'])): ?>
+                        <div class="floor-plans-container">
+                            <?php foreach ($property['floor_plans'] as $idx => $plan): ?>
+                                <?php 
+                                $planImgSrc = $plan['image'] ?? '';
+                                if ($planImgSrc && strpos($planImgSrc, 'assets/') === false) {
+                                    $planImgSrc = $planImgSrc;
+                                }
+                                ?>
+                                <div class="floor-accordion-item <?php echo $idx === 0 ? 'active' : ''; ?>">
+                                    <button class="floor-accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                                        <span><?php echo htmlspecialchars($plan['title'] ?? 'Floor Plan'); ?></span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down acc-arrow"><path d="m6 9 6 6 6-6"/></svg>
+                                    </button>
+                                    <div class="floor-accordion-content">
+                                        <p class="floor-plan-desc"><?php echo nl2br(htmlspecialchars($plan['desc'] ?? '')); ?></p>
+                                        <?php if (!empty($planImgSrc)): ?>
+                                            <div class="floor-plan-img-container custom-border-md text-center" style="width: 100%; border-radius: 12px; overflow: hidden; background: #fbfbfb; border: 1px solid rgba(229, 186, 115, 0.15); margin-top: 15px;">
+                                                <img src="<?php echo htmlspecialchars($planImgSrc); ?>" alt="<?php echo htmlspecialchars($plan['title'] ?? 'Floor Layout'); ?>" style="max-height: 400px; max-width: 100%; object-fit: contain; padding: 10px; display: block; margin: 0 auto;">
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
-
-                        <!-- Floor Level 2 -->
-                        <div class="floor-accordion-item">
-                            <button class="floor-accordion-header" onclick="this.parentElement.classList.toggle('active')">
-                                <span>First Level Floor Plan</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down acc-arrow"><path d="m6 9 6 6 6-6"/></svg>
-                            </button>
-                            <div class="floor-accordion-content">
-                                <p class="floor-plan-desc">Hosts the premium master bedroom wing featuring massive walk-in closets, luxury master bath with custom spa tubs, double vanity, and two secondary bedrooms with private balconies overlooking the pool grounds.</p>
-                                <div class="floor-plan-img-mock custom-border-md">
-                                    <div class="mock-plan-layout">
-                                        <div class="mock-plan-room">Master Suite</div>
-                                        <div class="mock-plan-room">Walk-in Closet</div>
-                                        <div class="mock-plan-room">Bedroom 2</div>
-                                        <div class="mock-plan-room">Bedroom 3</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php else: ?>
+                        <p class="text-muted" style="font-size:0.9rem;">No floor plans configured for this property.</p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Distance Mapping -->
@@ -408,64 +511,24 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
 
                         <!-- Sidebar Enquiry Form -->
-                        <form class="sidebar-inquiry-form" onsubmit="event.preventDefault(); alert('Your inquiry has been successfully sent to <?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra'), ENT_QUOTES); ?>. We will reach out shortly.'); this.reset();">
+                        <form class="sidebar-inquiry-form" id="sidebar-enquiry-form">
+                            <input type="hidden" name="project_id" value="<?php echo (int)$property['id']; ?>">
+                            <input type="hidden" name="project_title" value="<?php echo htmlspecialchars($property['title']); ?>">
+                            
                             <div class="form-group">
-                                <input type="text" placeholder="Your Full Name" required class="sidebar-input">
+                                <input type="text" name="client_name" placeholder="Your Full Name" required class="sidebar-input">
                             </div>
                             <div class="form-group">
-                                <input type="email" placeholder="Your Email Address" required class="sidebar-input">
+                                <input type="email" name="client_email" placeholder="Your Email Address" required class="sidebar-input">
                             </div>
                             <div class="form-group">
-                                <input type="tel" placeholder="Your Phone Number" required class="sidebar-input">
+                                <input type="tel" name="client_phone" placeholder="Your Phone Number" required class="sidebar-input">
                             </div>
                             <div class="form-group">
-                                <textarea rows="3" class="sidebar-textarea" required>I am interested in <?php echo htmlspecialchars($property['title']); ?>. Please send me further details and pricing structure.</textarea>
+                                <textarea name="client_message" rows="3" class="sidebar-textarea" required>I am interested in <?php echo htmlspecialchars($property['title']); ?>. Please send me further details and pricing structure.</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary w-full form-submit-btn">Send Enquiry <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
                         </form>
-                    </div>
-
-                    <!-- Mortgage Calculator -->
-                    <div class="mortgage-calc-card">
-                        <h4 class="calc-title">Mortgage Calculator</h4>
-                        <p class="calc-subtitle">Estimate your monthly housing installments.</p>
-                        
-                        <div class="calc-form">
-                            <!-- Loan Principal Amount -->
-                            <div class="calc-group">
-                                <label class="calc-label">Property Price (₹)</label>
-                                <input type="number" id="calc-price" value="<?php echo $property['raw_price']; ?>" class="calc-input">
-                            </div>
-
-                            <!-- Down Payment -->
-                            <div class="calc-group">
-                                <label class="calc-label">Down Payment (20% default)</label>
-                                <input type="number" id="calc-down-payment" value="<?php echo intval($property['raw_price'] * 0.2); ?>" class="calc-input">
-                            </div>
-
-                            <!-- Interest Rate -->
-                            <div class="calc-group">
-                                <label class="calc-label">Interest Rate (%)</label>
-                                <input type="number" step="0.1" id="calc-interest" value="8.5" class="calc-input">
-                            </div>
-
-                            <!-- Term -->
-                            <div class="calc-group">
-                                <label class="calc-label">Loan Term (Years)</label>
-                                <select id="calc-term" class="calc-select">
-                                    <option value="15">15 Years</option>
-                                    <option value="20" selected>20 Years</option>
-                                    <option value="25">25 Years</option>
-                                    <option value="30">30 Years</option>
-                                </select>
-                            </div>
-
-                            <!-- Calculation Result -->
-                            <div class="calc-result-box">
-                                <span class="result-label">Estimated Monthly Installment</span>
-                                <h3 class="result-amount" id="calc-result-display">₹0 /mo</h3>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -473,58 +536,58 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </main>
 
-<!-- Injected script variables for calculation -->
+<!-- SweetAlert2 CDN for modern notifications -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- jQuery and AJAX script for AJAX Enquiry Submission -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-    window.addEventListener('DOMContentLoaded', () => {
-        // Simple Mortgage Calculator JavaScript
-        const priceInput = document.getElementById('calc-price');
-        const downPaymentInput = document.getElementById('calc-down-payment');
-        const interestInput = document.getElementById('calc-interest');
-        const termInput = document.getElementById('calc-term');
-        const resultDisplay = document.getElementById('calc-result-display');
-
-        const calculateMortgage = () => {
-            const price = parseFloat(priceInput.value) || 0;
-            const downPayment = parseFloat(downPaymentInput.value) || 0;
-            const annualInterest = parseFloat(interestInput.value) || 0;
-            const termYears = parseFloat(termInput.value) || 20;
-
-            const principal = price - downPayment;
-            if (principal <= 0) {
-                resultDisplay.textContent = "₹0 /mo";
-                return;
+$(document).ready(function() {
+    $('#sidebar-enquiry-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        var $form = $(this);
+        var $btn = $form.find('button[type="submit"]');
+        var btnOriginalText = $btn.html();
+        
+        $btn.prop('disabled', true).html('Sending... <i class="fas fa-spinner fa-spin"></i>');
+        
+        $.ajax({
+            url: 'submit-enquiry.php',
+            type: 'POST',
+            data: $form.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({
+                        title: 'Enquiry Received!',
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonColor: '#28a745'
+                    });
+                    $form[0].reset();
+                } else {
+                    Swal.fire({
+                        title: 'Submission Error',
+                        text: response.message || 'Please check your inputs and try again.',
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'System Error',
+                    text: 'Unable to process your request at this time. Please try again later.',
+                    icon: 'error',
+                    confirmButtonColor: '#d33'
+                });
+            },
+            complete: function() {
+                $btn.prop('disabled', false).html(btnOriginalText);
             }
-
-            const monthlyInterest = (annualInterest / 100) / 12;
-            const totalPayments = termYears * 12;
-
-            let monthlyInstallment = 0;
-            if (monthlyInterest === 0) {
-                monthlyInstallment = principal / totalPayments;
-            } else {
-                monthlyInstallment = (principal * monthlyInterest * Math.pow(1 + monthlyInterest, totalPayments)) / 
-                                     (Math.pow(1 + monthlyInterest, totalPayments) - 1);
-            }
-
-            // Format Indian currency style
-            const formatted = new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR',
-                maximumFractionDigits: 0
-            }).format(monthlyInstallment);
-
-            resultDisplay.textContent = `${formatted} /mo`;
-        };
-
-        // Event Listeners
-        [priceInput, downPaymentInput, interestInput, termInput].forEach(elem => {
-            if (elem) elem.addEventListener('input', calculateMortgage);
         });
-
-        // Run initially
-        calculateMortgage();
     });
-</script>
+});
 
 <?php
 // Load footer include
