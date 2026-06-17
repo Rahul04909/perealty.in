@@ -71,13 +71,13 @@
                     <li><a href="index.php#hero" class="nav-link">Home</a></li>
                     <li><a href="index.php#projects" class="nav-link">Properties</a></li>
                     <li><a href="index.php#about" class="nav-link">About Us</a></li>
-                    <li><a href="index.php#contact" class="nav-link">Contact Us</a></li>
+                    <li><a href="contact.php" class="nav-link">Contact Us</a></li>
                 </ul>
             </nav>
 
             <!-- CTA & Burger Action Area -->
             <div class="action-area">
-                <a href="#contact" class="btn btn-primary btn-header-cta" id="btn-add-listing">
+                <a href="contact.php" class="btn btn-primary btn-header-cta" id="btn-add-listing">
                     Enquire Now <i data-lucide="arrow-right"></i>
                 </a>
                 
@@ -117,11 +117,11 @@
                     <li><a href="index.php#hero" class="mobile-nav-link">Home</a></li>
                     <li><a href="index.php#projects" class="mobile-nav-link">Properties</a></li>
                     <li><a href="index.php#about" class="mobile-nav-link">About Us</a></li>
-                    <li><a href="index.php#contact" class="mobile-nav-link">Contact Us</a></li>
+                    <li><a href="contact.php" class="mobile-nav-link">Contact Us</a></li>
                 </ul>
             </nav>
             <div class="drawer-footer">
-                <a href="#contact" class="btn btn-primary w-full" style="width: 100%;">Enquire Now <i data-lucide="arrow-right"></i></a>
+                <a href="contact.php" class="btn btn-primary w-full" style="width: 100%;">Enquire Now <i data-lucide="arrow-right"></i></a>
             </div>
         </div>
     </div>

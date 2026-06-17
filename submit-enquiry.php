@@ -41,6 +41,15 @@ if (!filter_var($clientEmail, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
+// Enforce 10-digit Indian Mobile Number validation
+$cleanPhone = preg_replace('/[^0-9]/', '', $clientPhone);
+if (strlen($cleanPhone) !== 10 || !preg_match('/^[6-9][0-9]{9}$/', $cleanPhone)) {
+    $response['message'] = 'Please enter a valid 10-digit Indian phone number (e.g. 9876543210).';
+    echo json_encode($response);
+    exit;
+}
+$clientPhone = $cleanPhone;
+
 try {
     $db = db();
     

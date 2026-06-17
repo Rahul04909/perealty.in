@@ -83,6 +83,19 @@ try {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
     echo "<h3>Enquiries table created or verified successfully!</h3>";
 
+    // Create General Contact Enquiries Table
+    $db->exec("CREATE TABLE IF NOT EXISTS `contact_enquiries` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(255) NOT NULL,
+        `email` VARCHAR(255) NOT NULL,
+        `phone` VARCHAR(50) NOT NULL,
+        `property_interest` VARCHAR(255) DEFAULT NULL,
+        `message` TEXT NOT NULL,
+        `status` VARCHAR(50) DEFAULT 'New',
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+    echo "<h3>General Contact Enquiries table created or verified successfully!</h3>";
+
     // 3. Setup mock projects data structure
     $mockProjects = [
         [

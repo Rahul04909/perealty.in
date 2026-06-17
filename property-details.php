@@ -522,7 +522,7 @@ require_once __DIR__ . '/includes/header.php';
                                 <input type="email" name="client_email" placeholder="Your Email Address" required class="sidebar-input">
                             </div>
                             <div class="form-group">
-                                <input type="tel" name="client_phone" placeholder="Your Phone Number" required class="sidebar-input">
+                                <input type="tel" name="client_phone" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" placeholder="Your 10-Digit Phone Number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required class="sidebar-input" title="Please enter a valid 10-digit Indian phone number starting with 6, 7, 8, or 9.">
                             </div>
                             <div class="form-group">
                                 <textarea name="client_message" rows="3" class="sidebar-textarea" required>I am interested in <?php echo htmlspecialchars($property['title']); ?>. Please send me further details and pricing structure.</textarea>

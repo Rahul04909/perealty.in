@@ -23,7 +23,8 @@ $menuItems = [
         "pages" => [
             ["title" => "All Projects", "url" => "projects.php"],
             ["title" => "Add Project", "url" => "project-add.php"],
-            ["title" => "Client Enquiries", "url" => "enquiries.php"]
+            ["title" => "Client Enquiries", "url" => "enquiries.php"],
+            ["title" => "Contact Enquiries", "url" => "contact-enquiries.php"]
         ],
     ],
     [
