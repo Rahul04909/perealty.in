@@ -7,9 +7,9 @@
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
-                Admin Panel Designed By <strong><a target="_blank" href="https://www.prayagcomputer.in">Rahul Dhiman / +91-8059982049</a></strong>
+                A website Designed & Developed By <strong><a target="_blank" href="<?php echo htmlspecialchars(env('DEVELOPER_URL', 'https://mineib.com')); ?>"><?php echo htmlspecialchars(env('DEVELOPER_NAME', 'Mineib')); ?></a></strong>
             </div>
-            <strong> &copy;<?php echo date('Y'); ?></strong> All rights reserved.
+            <strong>&copy; <?php echo date('Y'); ?> <a href="../"><?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?></a>.</strong> All rights reserved.
         </footer>
 
         <script>
@@ -31,7 +31,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         }).then(() => {
-                            window.location.href = '/logout/';
+                            window.location.href = 'logout.php';
                         });
                     }
                 });

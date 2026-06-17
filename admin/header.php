@@ -1,4 +1,12 @@
 <?php
+require_once dirname(__DIR__) . '/config.php';
+
+// Route Protection: Redirect to login if not authenticated
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header('Location: login.php');
+    exit;
+}
+
 $currentPage = basename($_SERVER['SCRIPT_NAME']);
 
 $menuItems = [
@@ -7,6 +15,13 @@ $menuItems = [
         "icon" => "fas fa-home",
         "pages" => [
             ["title" => "Home", "url" => "index.php"]
+        ],
+    ],
+    [
+        "menuTitle" => "Administrators",
+        "icon" => "fas fa-users-cog",
+        "pages" => [
+            ["title" => "Import Admin", "url" => "import-admin.php"]
         ],
     ],
     [
@@ -81,9 +96,9 @@ $active_page = $active_pageInfo['active_page'] ?? null;
 
         /* Brand Logo Area */
         .brand-link {
-            background-color: var(--primary-green) !important;
-            color: #fff !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background-color: var(--sidebar-bg) !important;
+            color: var(--sidebar-color) !important;
+            border-bottom: 1px solid var(--border-color) !important;
             padding: 15px !important;
             display: flex !important;
             justify-content: center !important;
@@ -369,35 +384,7 @@ $active_page = $active_pageInfo['active_page'] ?? null;
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <div class="nav-link">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./" class="nav-link">Home</a>
-                </li>
-            </ul>
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" name="search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#messages">
-                        <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">2</span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown"><a class="nav-link" href="#notifications">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">5</span>
-                    </a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
         </nav>
@@ -423,16 +410,20 @@ $active_page = $active_pageInfo['active_page'] ?? null;
 
         <aside class="main-sidebar sidebar-light-primary elevation-4">
             <a href="./" class="brand-link">
-                <img src="./src/images/prayag-computer-logo.png" alt="Logo" class="brand-image img-circle bg-white">
+                <img src="../assets/logo/logo.png" alt="<?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?> Logo" class="brand-image">
             </a>
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3">
-                    <a href="./profile.php" class="d-flex">
+                    <a href="./profile.php" class="d-flex align-items-center">
                         <div class="image">
-                            <img src="./src/images/user-avtar.png" class="img-circle elevation-2 bg-white" alt="User Image">
+                            <?php 
+                            $avatar = !empty($_SESSION['admin_profile_pic']) ? $_SESSION['admin_profile_pic'] : 'user-avtar.png';
+                            $avatarPath = "./src/images/" . $avatar;
+                            ?>
+                            <img src="<?php echo htmlspecialchars($avatarPath); ?>" class="img-circle elevation-2 bg-white" alt="User Image" style="width: 2.1rem; height: 2.1rem; object-fit: cover;">
                         </div>
                         <div class="info">
-                            Rahul
+                            <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Admin'); ?>
                         </div>
                     </a>
                 </div>
