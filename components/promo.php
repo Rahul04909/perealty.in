@@ -22,7 +22,7 @@
                 <!-- Testimonial CEO signature block -->
                 <div class="ceo-profile-card">
                     <div class="ceo-avatar-box">
-                        <img src="assets/images/agent_portrait.png" alt="<?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra')); ?>, <?php echo htmlspecialchars(env('CONTACT_AGENT_ROLE', 'Founder & Director')); ?> of <?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?>">
+                        <img src="assets/images/anil-mehra.jpeg" alt="<?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra')); ?>, <?php echo htmlspecialchars(env('CONTACT_AGENT_ROLE', 'Founder & Director')); ?> of <?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?>">
                     </div>
                     <div class="ceo-meta">
                         <h4 class="ceo-name"><?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra')); ?></h4>

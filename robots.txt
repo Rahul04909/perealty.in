@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /vendor/
+Disallow: /composer.json
+Disallow: /composer.lock
+Disallow: /.env
+
+# Sitemap location
+Sitemap: http://localhost/peprealty.com/sitemap.xml

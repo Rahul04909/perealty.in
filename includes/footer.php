@@ -84,8 +84,8 @@
             <div class="container footer-bottom-container">
                 <p class="copyright-text">&copy; <?php echo date("Y"); ?> <?php echo htmlspecialchars(env('APP_NAME', 'Prime Edge Realiity')); ?>. All rights reserved. | A website Designed & Developed By <a href="<?php echo htmlspecialchars(env('DEVELOPER_URL', 'https://mineib.com')); ?>" target="_blank" rel="noopener" style="color: var(--color-accent); font-weight: 600;"><?php echo htmlspecialchars(env('DEVELOPER_NAME', 'Mineib')); ?></a></p>
                 <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms & Conditions</a>
+                    <a href="privacy-policy.php">Privacy Policy</a>
+                    <a href="terms.php">Terms & Conditions</a>
                 </div>
             </div>
         </div>

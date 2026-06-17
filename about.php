@@ -411,7 +411,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="container">
             <div class="executive-grid">
                 <div class="exec-image-wrapper">
-                    <img src="assets/images/agent_portrait.png" alt="Anil Mehra - Founder & Director">
+                    <img src="assets/images/anil-mehra.jpeg" alt="Anil Mehra - Founder & Director">
                 </div>
                 
                 <div class="exec-details">

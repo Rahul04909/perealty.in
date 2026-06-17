@@ -54,7 +54,7 @@
                         </text>
                     </svg>
                     <div class="stamp-inner-image">
-                        <img src="assets/images/agent_portrait.png" alt="Executive Agent Portrait">
+                        <img src="assets/images/anil-mehra.jpeg" alt="Executive Agent Portrait">
                     </div>
                 </div>
             </div>

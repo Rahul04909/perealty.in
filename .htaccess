@@ -1,0 +1,7 @@
+# URL Rewriting Rules for Prime Edge Realty
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Route sitemap.xml to sitemap.php
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+</IfModule>

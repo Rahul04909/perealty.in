@@ -198,8 +198,16 @@
 }
 
 .form-select option {
-    background-color: var(--color-bg-dark-card);
-    color: var(--color-text-light);
+    background-color: #121e21 !important;
+    color: #ffffff !important;
+    font-family: var(--font-primary);
+}
+
+.form-select optgroup {
+    background-color: #0d1518 !important;
+    color: #e5ba73 !important;
+    font-style: normal;
+    font-weight: 700;
 }
 
 .select-arrow {

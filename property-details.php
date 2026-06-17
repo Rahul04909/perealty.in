@@ -501,7 +501,7 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="agent-form-card">
                         <div class="agent-profile">
                             <div class="agent-avatar">
-                                <img src="assets/images/agent_portrait.png" alt="<?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra')); ?>">
+                                <img src="assets/images/anil-mehra.jpeg" alt="<?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra')); ?>">
                             </div>
                             <div class="agent-meta">
                                 <h4 class="agent-name"><?php echo htmlspecialchars(env('CONTACT_AGENT_NAME', 'Anil Mehra')); ?></h4>
