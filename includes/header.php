@@ -114,8 +114,8 @@
         <div class="drawer-body">
             <nav class="mobile-nav" aria-label="Mobile Navigation">
                 <ul class="mobile-nav-list">
-                    <li><a href="index.php#hero" class="mobile-nav-link">Home</a></li>
-                    <li><a href="index.php#projects" class="mobile-nav-link">Properties</a></li>
+                    <li><a href="index.php" class="mobile-nav-link">Home</a></li>
+                    <li><a href="index.php" class="mobile-nav-link">Properties</a></li>
                     <li><a href="about.php" class="mobile-nav-link">About Us</a></li>
                     <li><a href="contact.php" class="mobile-nav-link">Contact Us</a></li>
                 </ul>
