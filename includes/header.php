@@ -70,7 +70,7 @@
                 <ul class="nav-list">
                     <li><a href="index.php#hero" class="nav-link">Home</a></li>
                     <li><a href="index.php#projects" class="nav-link">Properties</a></li>
-                    <li><a href="index.php#about" class="nav-link">About Us</a></li>
+                    <li><a href="about.php" class="nav-link">About Us</a></li>
                     <li><a href="contact.php" class="nav-link">Contact Us</a></li>
                 </ul>
             </nav>
@@ -116,7 +116,7 @@
                 <ul class="mobile-nav-list">
                     <li><a href="index.php#hero" class="mobile-nav-link">Home</a></li>
                     <li><a href="index.php#projects" class="mobile-nav-link">Properties</a></li>
-                    <li><a href="index.php#about" class="mobile-nav-link">About Us</a></li>
+                    <li><a href="about.php" class="mobile-nav-link">About Us</a></li>
                     <li><a href="contact.php" class="mobile-nav-link">Contact Us</a></li>
                 </ul>
             </nav>

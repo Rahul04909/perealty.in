@@ -91,16 +91,20 @@ if (empty($contactProjects)) {
                             </div>
                         </div>
 
-                        <!-- Property Dropdown (Dynamic Admin Properties) -->
+                        <!-- Property Dropdown (Dynamic Admin Properties grouped under optgroup) -->
                         <div class="form-group">
                             <label for="inquiry-property" class="form-label">Property Interest</label>
                             <div class="select-wrapper">
                                 <select id="inquiry-property" name="property_interest" class="form-select">
-                                    <?php foreach ($contactProjects as $projTitle): ?>
-                                        <option value="<?php echo htmlspecialchars($projTitle); ?>"><?php echo htmlspecialchars($projTitle); ?></option>
-                                    <?php endforeach; ?>
-                                    <option value="General Investment">General Smart Investment Enquiry</option>
-                                    <option value="Sell Property">Listing my property for sale</option>
+                                    <optgroup label="Active Properties & Projects" style="color: var(--color-accent); font-weight: bold;">
+                                        <?php foreach ($contactProjects as $projTitle): ?>
+                                            <option value="<?php echo htmlspecialchars($projTitle); ?>" style="color: #495057; font-weight: normal;"><?php echo htmlspecialchars($projTitle); ?></option>
+                                        <?php endforeach; ?>
+                                    </optgroup>
+                                    <optgroup label="Other Inquiry Options" style="color: #8c8f94; font-weight: bold;">
+                                        <option value="General Investment" style="color: #495057; font-weight: normal;">General Smart Investment Enquiry</option>
+                                        <option value="Sell Property" style="color: #495057; font-weight: normal;">Listing my property for sale</option>
+                                    </optgroup>
                                 </select>
                                 <i data-lucide="chevron-down" class="select-arrow"></i>
                             </div>
