@@ -68,8 +68,8 @@
             <!-- Navigation Links (Desktop) -->
             <nav class="desktop-nav" aria-label="Main Navigation">
                 <ul class="nav-list">
-                    <li><a href="index.php#hero" class="nav-link">Home</a></li>
-                    <li><a href="index.php#projects" class="nav-link">Properties</a></li>
+                    <li><a href="index.php" class="nav-link">Home</a></li>
+                    <li><a href="properties.php" class="nav-link">Properties</a></li>
                     <li><a href="about.php" class="nav-link">About Us</a></li>
                     <li><a href="contact.php" class="nav-link">Contact Us</a></li>
                 </ul>
