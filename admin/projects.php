@@ -118,13 +118,12 @@ $page_title = "Manage Projects";
                             </tr>
                         <?php else: ?>
                             <?php foreach ($projectsList as $proj): ?>
-                                <?php 
-                                // Resolve main image path
+                                <?php                                // Resolve main image path
                                 $imgSrc = $proj['image'];
-                                if (strpos($imgSrc, 'assets/') === false) {
-                                    $imgSrc = '../uploads/projects/' . $imgSrc;
-                                } else {
+                                if (strpos($imgSrc, 'uploads/') !== false || strpos($imgSrc, 'assets/') !== false) {
                                     $imgSrc = '../' . $imgSrc;
+                                } else {
+                                    $imgSrc = '../uploads/projects/' . $imgSrc;
                                 }
                                 ?>
                                 <tr>
