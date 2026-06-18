@@ -103,6 +103,7 @@ if ($dbProperty) {
         'seo_desc' => $dbProperty['seo_desc'],
         'seo_keywords' => $dbProperty['seo_keywords'],
         'floor_plans' => json_decode($dbProperty['floor_plans'] ?? '[]', true),
+        'amenities' => json_decode($dbProperty['amenities'] ?? '[]', true),
         'google_map' => $dbProperty['google_map'],
         'proximity' => json_decode($dbProperty['proximity_distances'] ?? '[]', true),
         'is_db' => true
@@ -176,6 +177,7 @@ if ($dbProperty) {
         'seo_desc' => strip_tags(html_entity_decode($mockProp['desc'])),
         'seo_keywords' => 'luxury villa, real estate faridabad, prime edge residence',
         'floor_plans' => $mockFloorPlans,
+        'amenities' => [],
         'google_map' => '',
         'proximity' => [
             ['name' => 'Delhi Public School', 'distance' => '1.2 km', 'icon' => 'school'],
@@ -184,6 +186,20 @@ if ($dbProperty) {
             ['name' => 'IGI Airport', 'distance' => '42 km', 'icon' => 'plane']
         ],
         'is_db' => false
+    ];
+}
+
+// Check and apply amenities fallback
+if (empty($property['amenities'])) {
+    $property['amenities'] = [
+        "Solar System Integration",
+        "Smart Home Automation",
+        "Heated Infinity Pool",
+        "Private Gym Facility",
+        "Walk-In Closets",
+        "Landscaped Zen Garden",
+        "Security CCTV Grid",
+        "High-End Italian Kitchen"
     ];
 }
 
@@ -380,38 +396,12 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="detail-section">
                     <h3 class="detail-section-title">Premium Amenities</h3>
                     <div class="amenities-check-grid">
-                        <div class="amenity-check-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
-                            <span>Solar System Integration</span>
-                        </div>
-                        <div class="amenity-check-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
-                            <span>Smart Home Automation</span>
-                        </div>
-                        <div class="amenity-check-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
-                            <span>Heated Infinity Pool</span>
-                        </div>
-                        <div class="amenity-check-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
-                            <span>Private Gym Facility</span>
-                        </div>
-                        <div class="amenity-check-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
-                            <span>Walk-In Closets</span>
-                        </div>
-                        <div class="amenity-check-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
-                            <span>Landscaped Zen Garden</span>
-                        </div>
-                        <div class="amenity-check-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
-                            <span>Security CCTV Grid</span>
-                        </div>
-                        <div class="amenity-check-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
-                            <span>High-End Italian Kitchen</span>
-                        </div>
+                        <?php foreach ($property['amenities'] as $amenity): ?>
+                            <div class="amenity-check-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check check-gold"><path d="M20 6 9 17l-5-5"/></svg>
+                                <span><?php echo htmlspecialchars($amenity); ?></span>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 

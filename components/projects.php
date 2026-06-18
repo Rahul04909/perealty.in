@@ -81,7 +81,7 @@ if (empty($dbProjectsList)) {
                         
                         // Resolve image source
                         $imgSrc = $slide['image'];
-                        if (strpos($imgSrc, 'assets/') === false) {
+                        if (strpos($imgSrc, 'assets/') === false && strpos($imgSrc, 'uploads/') === false) {
                             $imgSrc = 'uploads/projects/' . $imgSrc;
                         }
                         ?>

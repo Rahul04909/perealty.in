@@ -24,7 +24,7 @@ if ($hasAdmins && php_sapi_name() !== 'cli') {
 }
 
 try {
-    // 1. Create Projects Table (with SEO and Floor Plan fields)
+    // 1. Create Projects Table (with SEO, Floor Plan, and Amenities fields)
     $db->exec("CREATE TABLE IF NOT EXISTS `projects` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `slug` VARCHAR(100) NOT NULL UNIQUE,
@@ -45,6 +45,7 @@ try {
         `seo_desc` TEXT DEFAULT NULL,
         `seo_keywords` VARCHAR(255) DEFAULT NULL,
         `floor_plans` TEXT DEFAULT NULL,
+        `amenities` TEXT DEFAULT NULL,
         `google_map` TEXT DEFAULT NULL,
         `proximity_distances` TEXT DEFAULT NULL,
         `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -66,6 +67,9 @@ try {
     }
     if (!in_array('floor_plans', $columns)) {
         $db->exec("ALTER TABLE `projects` ADD `floor_plans` TEXT DEFAULT NULL AFTER `seo_keywords`");
+    }
+    if (!in_array('amenities', $columns)) {
+        $db->exec("ALTER TABLE `projects` ADD `amenities` TEXT DEFAULT NULL AFTER `floor_plans`");
     }
     echo "<h3>Projects table columns verified/migrated!</h3>";
 
@@ -138,6 +142,16 @@ try {
                 ['name' => 'Omaxe World Street Mall', 'distance' => '0.5 km', 'icon' => 'mall'],
                 ['name' => 'Fortis Hospital', 'distance' => '3.4 km', 'icon' => 'hospital'],
                 ['name' => 'IGI Airport', 'distance' => '42 km', 'icon' => 'airport']
+            ]),
+            'amenities' => json_encode([
+                "Solar System Integration",
+                "Smart Home Automation",
+                "Heated Infinity Pool",
+                "Private Gym Facility",
+                "Walk-In Closets",
+                "Landscaped Zen Garden",
+                "Security CCTV Grid",
+                "High-End Italian Kitchen"
             ])
         ],
         [
@@ -180,6 +194,16 @@ try {
                 ['name' => 'Omaxe World Street Mall', 'distance' => '0.2 km', 'icon' => 'mall'],
                 ['name' => 'Fortis Hospital', 'distance' => '3.1 km', 'icon' => 'hospital'],
                 ['name' => 'IGI Airport', 'distance' => '41.8 km', 'icon' => 'airport']
+            ]),
+            'amenities' => json_encode([
+                "Solar System Integration",
+                "Smart Home Automation",
+                "Heated Infinity Pool",
+                "Private Gym Facility",
+                "Walk-In Closets",
+                "Landscaped Zen Garden",
+                "Security CCTV Grid",
+                "High-End Italian Kitchen"
             ])
         ],
         [
@@ -222,6 +246,16 @@ try {
                 ['name' => 'Omaxe World Street Mall', 'distance' => '0.8 km', 'icon' => 'mall'],
                 ['name' => 'Fortis Hospital', 'distance' => '2.5 km', 'icon' => 'hospital'],
                 ['name' => 'IGI Airport', 'distance' => '42.5 km', 'icon' => 'airport']
+            ]),
+            'amenities' => json_encode([
+                "Solar System Integration",
+                "Smart Home Automation",
+                "Heated Infinity Pool",
+                "Private Gym Facility",
+                "Walk-In Closets",
+                "Landscaped Zen Garden",
+                "Security CCTV Grid",
+                "High-End Italian Kitchen"
             ])
         ]
     ];
@@ -230,8 +264,8 @@ try {
     $stmtCountProj = $db->query("SELECT COUNT(*) FROM `projects`");
     if ($stmtCountProj->fetchColumn() == 0) {
         $insert = $db->prepare("INSERT INTO `projects` 
-            (`slug`, `title`, `location`, `price`, `raw_price`, `beds`, `baths`, `sqft`, `garages`, `year`, `image`, `gallery`, `desc`, `tag`, `seo_title`, `seo_desc`, `seo_keywords`, `floor_plans`, `google_map`, `proximity_distances`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            (`slug`, `title`, `location`, `price`, `raw_price`, `beds`, `baths`, `sqft`, `garages`, `year`, `image`, `gallery`, `desc`, `tag`, `seo_title`, `seo_desc`, `seo_keywords`, `floor_plans`, `amenities`, `google_map`, `proximity_distances`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
         foreach ($mockProjects as $proj) {
             $insert->execute([
@@ -253,18 +287,20 @@ try {
                 $proj['seo_desc'],
                 $proj['seo_keywords'],
                 $proj['floor_plans'],
+                $proj['amenities'],
                 $proj['google_map'],
                 $proj['proximity_distances']
             ]);
         }
         echo "<h3>Default projects seeded successfully!</h3>";
     } else {
-        // Automatically update existing mock rows with the new SEO and floor plan data
+        // Automatically update existing mock rows with the new SEO, floor plan and amenities data
         $update = $db->prepare("UPDATE `projects` SET 
             `seo_title` = ?, 
             `seo_desc` = ?, 
             `seo_keywords` = ?, 
-            `floor_plans` = ? 
+            `floor_plans` = ?,
+            `amenities` = ?
             WHERE `slug` = ?");
             
         foreach ($mockProjects as $proj) {
@@ -273,10 +309,11 @@ try {
                 $proj['seo_desc'],
                 $proj['seo_keywords'],
                 $proj['floor_plans'],
+                $proj['amenities'],
                 $proj['slug']
             ]);
         }
-        echo "<h3>Existing projects updated with SEO and Floor Plan defaults!</h3>";
+        echo "<h3>Existing projects updated with SEO, Floor Plan, and Amenities defaults!</h3>";
     }
     
     echo "<p><a href='./projects.php'>Go to Projects Management Panel</a></p>";

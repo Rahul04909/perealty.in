@@ -158,11 +158,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
                 
+                // Process Amenities
+                $amenities = [];
+                if (empty($error) && !empty($_POST['amenities'])) {
+                    foreach ($_POST['amenities'] as $am) {
+                        $trimmed = trim($am);
+                        if ($trimmed !== '') {
+                            $amenities[] = $trimmed;
+                        }
+                    }
+                }
+                
                 // Insert project into DB
                 if (empty($error)) {
                     $insert = $db->prepare("INSERT INTO `projects` 
-                        (`slug`, `title`, `location`, `price`, `raw_price`, `beds`, `baths`, `sqft`, `garages`, `year`, `image`, `gallery`, `desc`, `tag`, `seo_title`, `seo_desc`, `seo_keywords`, `floor_plans`, `google_map`, `proximity_distances`) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        (`slug`, `title`, `location`, `price`, `raw_price`, `beds`, `baths`, `sqft`, `garages`, `year`, `image`, `gallery`, `desc`, `tag`, `seo_title`, `seo_desc`, `seo_keywords`, `floor_plans`, `amenities`, `google_map`, `proximity_distances`) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     
                     $insert->execute([
                         $slug,
@@ -183,6 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $seo_desc,
                         $seo_keywords,
                         json_encode($floorPlans),
+                        json_encode($amenities),
                         $google_map,
                         json_encode($proximity)
                     ]);
@@ -359,6 +371,39 @@ $page_title = "Add Project";
                             </button>
                         </div>
 
+                        <!-- Section: Amenities -->
+                        <h5 class="text-success font-weight-bold border-bottom pb-2 mb-3 mt-4"><i class="fas fa-list-ul me-1"></i> Premium Amenities</h5>
+                        <div class="mb-3">
+                            <label class="form-label font-weight-bold text-muted d-block">Manage Property Amenities</label>
+                            <div id="amenities-container">
+                                <?php 
+                                $defaultAmenities = [
+                                    "Solar System Integration",
+                                    "Smart Home Automation",
+                                    "Heated Infinity Pool",
+                                    "Private Gym Facility",
+                                    "Walk-In Closets",
+                                    "Landscaped Zen Garden",
+                                    "Security CCTV Grid",
+                                    "High-End Italian Kitchen"
+                                ];
+                                foreach ($defaultAmenities as $defaultAm): 
+                                ?>
+                                    <div class="row mb-2 amenity-row">
+                                        <div class="col-md-11 col-10">
+                                            <input type="text" name="amenities[]" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" placeholder="e.g. Solar System Integration" value="<?php echo htmlspecialchars($defaultAm); ?>">
+                                        </div>
+                                        <div class="col-md-1 col-2">
+                                            <button type="button" class="btn btn-danger btn-remove-amenity w-100" style="height: 38px;"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <button type="button" class="btn btn-outline-success btn-sm mt-2" id="btn-add-amenity">
+                                <i class="fas fa-plus-circle me-1"></i> Add Amenity
+                            </button>
+                        </div>
+
                         <!-- Section 5: Map & Proximity -->
                         <h5 class="text-success font-weight-bold border-bottom pb-2 mb-3 mt-4"><i class="fas fa-map-marked-alt me-1"></i> Location Mapping & Proximity</h5>
                         
@@ -523,6 +568,24 @@ $(document).ready(function() {
         } else {
             $(this).closest('.floor-plan-row').find('input, textarea').val('');
         }
+    });
+
+    // 5. Amenities dynamic items addition/removal
+    $('#btn-add-amenity').on('click', function() {
+        var rowMarkup = `
+        <div class="row mb-2 amenity-row">
+            <div class="col-md-11 col-10">
+                <input type="text" name="amenities[]" class="form-control" style="background-color: #f8f9fa !important; color: #495057 !important;" placeholder="e.g. Solar System Integration">
+            </div>
+            <div class="col-md-1 col-2">
+                <button type="button" class="btn btn-danger btn-remove-amenity w-100" style="height: 38px;"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>`;
+        $('#amenities-container').append(rowMarkup);
+    });
+
+    $(document).on('click', '.btn-remove-amenity', function() {
+        $(this).closest('.amenity-row').remove();
     });
 });
 </script>
